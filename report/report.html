@@ -1,0 +1,746 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Smart Air Conditioner – IoT Project Report – Djebbar Lotfi</title>
+<style>
+  @page {
+    size: A4;
+    margin: 20mm 18mm 20mm 18mm;
+    @bottom-left { content: "Smart Air Conditioner · IoT project report"; font: 8.5pt 'Segoe UI', Arial, sans-serif; color: #64748b; }
+    @bottom-right { content: "Page " counter(page) " / " counter(pages); font: 8.5pt 'Segoe UI', Arial, sans-serif; color: #64748b; }
+  }
+  @page cover { margin: 0; @bottom-left { content: none; } @bottom-right { content: none; } }
+
+  :root { --ink: #0f172a; --muted: #475569; --line: #cbd5e1; --soft: #f1f5f9; --accent: #0e7490; --accent2: #0891b2; }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { font-family: 'Segoe UI', 'Inter', Arial, sans-serif; color: var(--ink); font-size: 10.5pt; line-height: 1.55; margin: 0; }
+
+  /* ---------- cover ---------- */
+  .cover { page: cover; height: 297mm; position: relative; overflow: hidden; color: #e2e8f0;
+    background: linear-gradient(160deg, #134e5e 0%, #0f172a 45%, #0b1120 100%); }
+  .cover-inner { position: absolute; left: 22mm; right: 22mm; top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: space-between; padding: 30mm 0 24mm; }
+  .cover .tag { display: inline-block; font-size: 9pt; letter-spacing: .18em; text-transform: uppercase; color: #67e8f9; border: 1px solid rgba(103,232,249,.4); border-radius: 999px; padding: 4px 12px; }
+  .cover h1 { font-size: 38pt; line-height: 1.08; margin: 14mm 0 6mm; color: #fff; letter-spacing: -.02em; }
+  .cover .subtitle { font-size: 14pt; color: #94a3b8; max-width: 140mm; }
+  .cover .stack { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10mm; }
+  .cover .stack span { font-size: 9.5pt; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 8px; padding: 5px 10px; color: #cbd5e1; }
+  .cover .shot { margin-top: 12mm; border-radius: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,.12); box-shadow: 0 20px 50px rgba(0,0,0,.5); }
+  .cover .shot img { width: 100%; display: block; }
+  .cover .meta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6mm; border-top: 1px solid rgba(255,255,255,.15); padding-top: 6mm; }
+  .cover .meta div { font-size: 9pt; color: #94a3b8; }
+  .cover .meta b { display: block; color: #fff; font-size: 11.5pt; font-weight: 600; margin-top: 2px; }
+
+  /* ---------- content ---------- */
+  h2 { font-size: 17pt; color: var(--ink); margin: 0 0 4mm; padding-bottom: 2mm; border-bottom: 2px solid var(--accent); letter-spacing: -.01em; break-after: avoid; }
+  h2 .num { color: var(--accent); margin-right: 6px; }
+  h3 { font-size: 12.5pt; margin: 6mm 0 2mm; color: var(--ink); break-after: avoid; }
+  h4 { font-size: 10.5pt; margin: 4mm 0 1.5mm; color: var(--accent); break-after: avoid; }
+  section { break-before: auto; margin-top: 10mm; }
+  section.first { margin-top: 0; }
+  section:nth-of-type(2) { break-before: page; margin-top: 0; }
+  p { margin: 0 0 2.6mm; text-align: justify; }
+  ul, ol { margin: 0 0 3mm; padding-left: 6mm; }
+  li { margin-bottom: 1mm; }
+  code { font-family: 'Cascadia Code', Consolas, monospace; font-size: 9pt; background: var(--soft); border: 1px solid #e2e8f0; border-radius: 4px; padding: 0 4px; }
+  pre { font-family: 'Cascadia Code', Consolas, monospace; font-size: 8.4pt; line-height: 1.45; background: #0f172a; color: #e2e8f0; border-radius: 8px; padding: 4mm 5mm; margin: 2mm 0 4mm; white-space: pre-wrap; break-inside: avoid; }
+  pre .c { color: #7dd3fc; opacity: .8; } pre .k { color: #f0abfc; } pre .s { color: #86efac; } pre .n { color: #fcd34d; }
+  table { width: 100%; border-collapse: collapse; margin: 2mm 0 4mm; font-size: 9.4pt; break-inside: avoid; }
+  th { background: #0f172a; color: #fff; text-align: left; font-weight: 600; padding: 2mm 2.5mm; }
+  td { padding: 1.8mm 2.5mm; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
+  tr:nth-child(even) td { background: #f8fafc; }
+  td code { font-size: 8.4pt; }
+  figure { margin: 3mm 0 5mm; break-inside: avoid; text-align: center; }
+  figure img { max-width: 100%; border-radius: 8px; border: 1px solid var(--line); }
+  figure svg { max-width: 100%; height: auto; }
+  figcaption { font-size: 9pt; color: var(--muted); margin-top: 2mm; }
+  figcaption b { color: var(--ink); }
+  .box { border: 1px solid #a5f3fc; background: #ecfeff; border-left: 4px solid var(--accent2); border-radius: 6px; padding: 3mm 4mm; margin: 3mm 0 4mm; break-inside: avoid; }
+  .box.warn { border-color: #fde68a; background: #fffbeb; border-left-color: #d97706; }
+  .box p:last-child { margin-bottom: 0; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; }
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3mm; margin: 3mm 0 5mm; }
+  .kpi { border: 1px solid var(--line); border-radius: 8px; padding: 3mm; break-inside: avoid; }
+  .kpi b { display: block; font-size: 15pt; color: var(--accent); }
+  .kpi span { font-size: 8.6pt; color: var(--muted); }
+  .toc { margin-top: 4mm; }
+  .toc div { display: flex; gap: 3mm; padding: 2mm 0; border-bottom: 1px dotted var(--line); font-size: 11pt; }
+  .toc div span:first-child { color: var(--accent); font-weight: 700; width: 9mm; }
+  .toc div small { color: var(--muted); margin-left: auto; font-size: 9pt; }
+  .pill { display: inline-block; font-size: 8pt; font-weight: 600; padding: 0 6px; border-radius: 999px; }
+  .pill.pub { background: #dcfce7; color: #166534; } .pill.sub { background: #e0e7ff; color: #3730a3; }
+</style>
+</head>
+<body>
+
+<!-- ======================================================= COVER -->
+<div class="cover">
+  <div class="cover-inner">
+    <div>
+      <span class="tag">Internet of Things · Project report</span>
+      <h1>Smart Air<br>Conditioner</h1>
+      <div class="subtitle">A connected thermostat built on an ESP32 and a DHT sensor, communicating over MQTT and supervised from a Node-RED dashboard.</div>
+      <div class="stack"><span>ESP32 DevKit-C</span><span>DHT22 / DHT11</span><span>Relay + LCD 16×2 I²C</span><span>MQTT · HiveMQ</span><span>Node-RED Dashboard</span><span>PlatformIO · Wokwi</span></div>
+      <div class="shot"><img src="img/dashboard.png" alt="Dashboard"></div>
+    </div>
+    <div class="meta">
+      <div>Author<b>Djebbar Lotfi</b></div>
+      <div>Simulation<b>Wokwi for VS Code</b></div>
+      <div>Date<b>November 2026</b></div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================================================= TOC -->
+<section class="first" style="break-before: page;">
+  <h2>Contents</h2>
+  <div class="toc">
+    <div><span>1</span>Introduction and objectives</div>
+    <div><span>2</span>System architecture</div>
+    <div><span>3</span>Hardware design</div>
+    <div><span>4</span>Firmware design (ESP32)</div>
+    <div><span>5</span>MQTT communication</div>
+    <div><span>6</span>Control logic</div>
+    <div><span>7</span>Node-RED supervision dashboard</div>
+    <div><span>8</span>Verification and test plan</div>
+    <div><span>9</span>Limitations and possible improvements</div>
+    <div><span>10</span>Conclusion</div>
+    <div><span>A</span>Appendix – project files and how to run</div>
+  </div>
+
+  <h3 style="margin-top:12mm">Summary</h3>
+  <p>This project implements a <b>smart air conditioner</b>. An ESP32 microcontroller measures the room temperature and humidity with a DHT sensor and switches a relay that represents the AC compressor. It runs as an <b>automatic thermostat with hysteresis</b> (AUTO mode) or under direct user control (MANUAL mode). The device publishes its state every two seconds over <b>MQTT</b> and receives commands on dedicated topics. A <b>Node-RED dashboard</b> displays live measurements, history and alerts, and lets the user change the mode, the power state and the setpoint remotely.</p>
+  <p>The hardware is simulated with <b>Wokwi for VS Code</b>. The firmware is compiled with <b>PlatformIO</b> (Arduino framework), and the public broker <code>broker.hivemq.com</code> links the simulated device to the dashboard.</p>
+
+  <div class="kpis">
+    <div class="kpi"><b>2 s</b><span>Sampling and telemetry period</span></div>
+    <div class="kpi"><b>±0.5 °C</b><span>Thermostat hysteresis</span></div>
+    <div class="kpi"><b>5</b><span>MQTT topics (2 published, 3 subscribed)</span></div>
+    <div class="kpi"><b>0</b><span><code>delay()</code> calls in <code>loop()</code>: fully non-blocking</span></div>
+  </div>
+</section>
+
+<!-- ======================================================= 1 -->
+<section>
+  <h2><span class="num">1</span>Introduction and objectives</h2>
+  <p>Air conditioning is one of the largest energy consumers in buildings. A conventional unit is controlled locally with a remote control and gives no feedback to the user when they are away. Connecting it to a network allows <b>remote monitoring</b>, <b>remote control</b> and <b>data logging</b>, which are the three core functions of most IoT systems.</p>
+  <p>The objective of this homework is to design and demonstrate a complete, end-to-end IoT chain for an air conditioner:</p>
+  <ol>
+    <li><b>Sensing</b>: measure temperature and relative humidity periodically with a DHT sensor.</li>
+    <li><b>Actuation</b>: drive the compressor (a relay) and show the local state on an LCD.</li>
+    <li><b>Local intelligence</b>: regulate the temperature autonomously around a setpoint, using hysteresis to avoid relay chattering.</li>
+    <li><b>Communication</b>: publish telemetry and receive commands over MQTT, including connection supervision with a Last Will message.</li>
+    <li><b>Supervision</b>: provide a web dashboard with gauges, history, controls and alerts that always shows the real state of the device.</li>
+  </ol>
+  <h3>Functional requirements</h3>
+  <table>
+    <tr><th style="width:14mm">ID</th><th>Requirement</th></tr>
+    <tr><td>F1</td><td>Read temperature and humidity every 2 s; ignore invalid (NaN) readings and log an error.</td></tr>
+    <tr><td>F2</td><td>AUTO mode (default): AC ON if T &gt; SP + 0.5 °C, OFF if T &lt; SP − 0.5 °C, default SP = 24 °C.</td></tr>
+    <tr><td>F3</td><td>MANUAL mode: the AC follows the ON/OFF command; a power command automatically selects MANUAL.</td></tr>
+    <tr><td>F4</td><td>Setpoint adjustable remotely, accepted only between 16 and 30 °C.</td></tr>
+    <tr><td>F5</td><td>Publish a JSON telemetry message every 2 s and immediately after each accepted command.</td></tr>
+    <tr><td>F6</td><td>Report the device presence (<code>online</code> / <code>offline</code>) with a retained message and an MQTT Last Will.</td></tr>
+    <tr><td>F7</td><td>Show the measurements and the state on a 16×2 LCD and on a web dashboard, with a history chart and a high-temperature alert (≥ 35 °C).</td></tr>
+  </table>
+  <h3>Non-functional requirements</h3>
+  <ul>
+    <li><b>Non-blocking firmware</b>: all timing based on <code>millis()</code>, no <code>delay()</code> in the main loop.</li>
+    <li><b>Robust connectivity</b>: automatic WiFi and MQTT reconnection without blocking the control loop.</li>
+    <li><b>Unique identity</b>: MQTT client ID derived from the chip MAC address.</li>
+    <li><b>Reproducibility</b>: the whole system runs in simulation (Wokwi) and can be demonstrated on any PC.</li>
+  </ul>
+</section>
+
+<!-- ======================================================= 2 -->
+<section>
+  <h2><span class="num">2</span>System architecture</h2>
+  <p>The system follows the classic three-layer IoT architecture: a <b>perception layer</b> (ESP32, sensor and actuators), a <b>network layer</b> (WiFi and an MQTT broker using the publish/subscribe pattern) and an <b>application layer</b> (Node-RED dashboard). The device and the dashboard never talk to each other directly. Both are clients of the broker, which decouples them in space and time.</p>
+
+  <figure>
+    <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial" font-size="12">
+      <defs>
+        <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#0e7490"/></marker>
+        <marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#7c3aed"/></marker>
+      </defs>
+      <!-- layers -->
+      <text x="105" y="22" text-anchor="middle" font-size="10" fill="#64748b" letter-spacing="2">PERCEPTION</text>
+      <text x="380" y="22" text-anchor="middle" font-size="10" fill="#64748b" letter-spacing="2">NETWORK</text>
+      <text x="655" y="22" text-anchor="middle" font-size="10" fill="#64748b" letter-spacing="2">APPLICATION</text>
+      <!-- ESP32 -->
+      <rect x="10" y="40" width="190" height="220" rx="12" fill="#f8fafc" stroke="#0f172a" stroke-width="1.5"/>
+      <rect x="10" y="40" width="190" height="34" rx="12" fill="#0f172a"/><rect x="10" y="60" width="190" height="14" fill="#0f172a"/>
+      <text x="105" y="62" text-anchor="middle" fill="#fff" font-weight="700">ESP32 (Wokwi)</text>
+      <g font-size="11.5" fill="#0f172a">
+        <rect x="26" y="88" width="158" height="28" rx="6" fill="#ecfeff" stroke="#67e8f9"/><text x="105" y="106" text-anchor="middle">DHT22 – temp / humidity</text>
+        <rect x="26" y="124" width="158" height="28" rx="6" fill="#ecfeff" stroke="#67e8f9"/><text x="105" y="142" text-anchor="middle">Thermostat logic</text>
+        <rect x="26" y="160" width="158" height="28" rx="6" fill="#ecfeff" stroke="#67e8f9"/><text x="105" y="178" text-anchor="middle">Relay → compressor LED</text>
+        <rect x="26" y="196" width="158" height="28" rx="6" fill="#ecfeff" stroke="#67e8f9"/><text x="105" y="214" text-anchor="middle">LCD 16×2 (I²C)</text>
+      </g>
+      <text x="105" y="248" text-anchor="middle" font-size="10.5" fill="#475569">PubSubClient · WiFi "Wokwi-GUEST"</text>
+      <!-- Broker -->
+      <rect x="290" y="95" width="180" height="110" rx="12" fill="#0e7490"/>
+      <text x="380" y="135" text-anchor="middle" fill="#fff" font-weight="700" font-size="14">MQTT broker</text>
+      <text x="380" y="156" text-anchor="middle" fill="#cffafe">broker.hivemq.com</text>
+      <text x="380" y="174" text-anchor="middle" fill="#cffafe">TCP 1883</text>
+      <!-- Node-RED -->
+      <rect x="560" y="40" width="190" height="220" rx="12" fill="#f8fafc" stroke="#0f172a" stroke-width="1.5"/>
+      <rect x="560" y="40" width="190" height="34" rx="12" fill="#8f0000"/><rect x="560" y="60" width="190" height="14" fill="#8f0000"/>
+      <text x="655" y="62" text-anchor="middle" fill="#fff" font-weight="700">Node-RED</text>
+      <g font-size="11.5" fill="#0f172a">
+        <rect x="576" y="88" width="158" height="28" rx="6" fill="#fef2f2" stroke="#fca5a5"/><text x="655" y="106" text-anchor="middle">MQTT in / out nodes</text>
+        <rect x="576" y="124" width="158" height="28" rx="6" fill="#fef2f2" stroke="#fca5a5"/><text x="655" y="142" text-anchor="middle">Function nodes (JS)</text>
+        <rect x="576" y="160" width="158" height="28" rx="6" fill="#fef2f2" stroke="#fca5a5"/><text x="655" y="178" text-anchor="middle">Dashboard widgets</text>
+        <rect x="576" y="196" width="158" height="28" rx="6" fill="#fef2f2" stroke="#fca5a5"/><text x="655" y="214" text-anchor="middle">Browser :1880/ui</text>
+      </g>
+      <text x="655" y="248" text-anchor="middle" font-size="10.5" fill="#475569">node-red-dashboard</text>
+      <!-- arrows -->
+      <line x1="202" y1="118" x2="286" y2="118" stroke="#0e7490" stroke-width="2.5" marker-end="url(#ar)"/>
+      <text x="244" y="108" text-anchor="middle" font-size="10.5" fill="#0e7490">telemetry</text>
+      <text x="244" y="134" text-anchor="middle" font-size="10.5" fill="#0e7490">status</text>
+      <line x1="472" y1="118" x2="556" y2="118" stroke="#0e7490" stroke-width="2.5" marker-end="url(#ar)"/>
+      <text x="514" y="108" text-anchor="middle" font-size="10.5" fill="#0e7490">subscribe</text>
+      <line x1="556" y1="182" x2="472" y2="182" stroke="#7c3aed" stroke-width="2.5" marker-end="url(#ar2)"/>
+      <text x="514" y="200" text-anchor="middle" font-size="10.5" fill="#7c3aed">publish cmd</text>
+      <line x1="286" y1="182" x2="202" y2="182" stroke="#7c3aed" stroke-width="2.5" marker-end="url(#ar2)"/>
+      <text x="244" y="200" text-anchor="middle" font-size="10.5" fill="#7c3aed">cmd/mode</text>
+      <text x="244" y="214" text-anchor="middle" font-size="10.5" fill="#7c3aed">power · setpoint</text>
+      <text x="380" y="285" text-anchor="middle" font-size="11" fill="#475569">Data flow: device → broker → dashboard  ·  Command flow: dashboard → broker → device</text>
+    </svg>
+    <figcaption><b>Figure 1.</b> Overall architecture and data/command flows.</figcaption>
+  </figure>
+
+  <h3>Technology choices</h3>
+  <table>
+    <tr><th style="width:38mm">Element</th><th style="width:45mm">Choice</th><th>Justification</th></tr>
+    <tr><td>Microcontroller</td><td>ESP32 DevKit-C v4</td><td>Built-in WiFi, dual core 240 MHz, enough RAM for TCP/IP and MQTT, supported by Wokwi and PlatformIO.</td></tr>
+    <tr><td>Sensor</td><td>DHT22 (DHT11 on hardware)</td><td>Single-wire digital temperature and humidity sensor; DHT11 and DHT22 share the same library and wiring.</td></tr>
+    <tr><td>Protocol</td><td>MQTT 3.1.1</td><td>Lightweight publish/subscribe protocol designed for constrained devices; provides QoS levels, retained messages and Last Will.</td></tr>
+    <tr><td>Broker</td><td>HiveMQ public broker</td><td>Free and reachable from the Wokwi internet gateway (the simulator cannot reach <code>localhost</code>).</td></tr>
+    <tr><td>Application</td><td>Node-RED + dashboard</td><td>Low-code flow-based tool with native MQTT nodes and ready-made UI widgets.</td></tr>
+    <tr><td>Toolchain</td><td>PlatformIO + Wokwi for VS Code</td><td>Reproducible builds with declared library dependencies; Wokwi runs the exact compiled firmware.</td></tr>
+  </table>
+</section>
+
+<!-- ======================================================= 3 -->
+<section>
+  <h2><span class="num">3</span>Hardware design</h2>
+  <h3>3.1 Bill of materials</h3>
+  <table>
+    <tr><th>Component</th><th>Wokwi part</th><th>Role</th></tr>
+    <tr><td>ESP32 DevKit-C v4</td><td><code>board-esp32-devkit-c-v4</code></td><td>Main controller, WiFi and MQTT client</td></tr>
+    <tr><td>DHT22 sensor</td><td><code>wokwi-dht22</code></td><td>Temperature (−40…80 °C, ±0.5 °C) and humidity (0…100 %, ±2 %)</td></tr>
+    <tr><td>Relay module 5 V</td><td><code>wokwi-relay-module</code></td><td>Represents the AC compressor contactor</td></tr>
+    <tr><td>Blue LED "AC" + 220 Ω resistor</td><td><code>wokwi-led</code>, <code>wokwi-resistor</code></td><td>Lit through the relay contact, visualises the compressor</td></tr>
+    <tr><td>LCD 1602 with I²C backpack (0x27)</td><td><code>wokwi-lcd1602</code> (pins = i2c)</td><td>Local display of measurements and state</td></tr>
+    <tr><td>On-board LED (GPIO2)</td><td>part of the board</td><td>MQTT connection indicator</td></tr>
+  </table>
+
+  <h3>3.2 Wiring</h3>
+  <div class="grid2">
+  <table>
+    <tr><th>Part pin</th><th>ESP32 pin</th></tr>
+    <tr><td>DHT22 VCC</td><td>3V3</td></tr>
+    <tr><td>DHT22 SDA (data)</td><td><b>GPIO15</b></td></tr>
+    <tr><td>DHT22 GND</td><td>GND</td></tr>
+    <tr><td>Relay VCC</td><td>5V</td></tr>
+    <tr><td>Relay IN</td><td><b>GPIO26</b></td></tr>
+    <tr><td>Relay GND</td><td>GND</td></tr>
+  </table>
+  <table>
+    <tr><th>Part pin</th><th>Connection</th></tr>
+    <tr><td>Relay COM</td><td>3V3</td></tr>
+    <tr><td>Relay NO</td><td>LED anode</td></tr>
+    <tr><td>LED cathode</td><td>220 Ω → GND</td></tr>
+    <tr><td>LCD SDA / SCL</td><td><b>GPIO21</b> / <b>GPIO22</b></td></tr>
+    <tr><td>LCD VCC / GND</td><td>5V / GND</td></tr>
+    <tr><td>Serial monitor</td><td>TX / RX</td></tr>
+  </table>
+  </div>
+
+  <figure>
+    <svg viewBox="0 0 760 330" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial" font-size="11.5">
+      <!-- ESP32 -->
+      <rect x="300" y="60" width="150" height="230" rx="8" fill="#1e293b"/>
+      <text x="375" y="84" text-anchor="middle" fill="#fff" font-weight="700" font-size="13">ESP32</text>
+      <text x="375" y="100" text-anchor="middle" fill="#94a3b8" font-size="10">DevKit-C v4</text>
+      <g fill="#e2e8f0" font-size="10.5">
+        <text x="308" y="130">3V3</text><text x="308" y="160">GPIO15</text><text x="308" y="190">GND</text><text x="308" y="250">GPIO2 (LED)</text>
+        <text x="442" y="130" text-anchor="end">5V</text><text x="442" y="160" text-anchor="end">GPIO26</text><text x="442" y="190" text-anchor="end">GPIO21 SDA</text><text x="442" y="220" text-anchor="end">GPIO22 SCL</text><text x="442" y="250" text-anchor="end">GND</text>
+      </g>
+      <circle cx="420" cy="270" r="5" fill="#38bdf8"/><text x="408" y="274" text-anchor="end" fill="#94a3b8" font-size="9.5">MQTT LED</text>
+      <!-- DHT -->
+      <rect x="40" y="105" width="110" height="100" rx="8" fill="#f8fafc" stroke="#0f172a"/>
+      <text x="95" y="128" text-anchor="middle" font-weight="700">DHT22</text>
+      <text x="142" y="150" text-anchor="end" font-size="10">VCC</text><text x="142" y="170" text-anchor="end" font-size="10">SDA</text><text x="142" y="190" text-anchor="end" font-size="10">GND</text>
+      <polyline points="150,146 230,146 230,126 300,126" fill="none" stroke="#dc2626" stroke-width="2"/>
+      <polyline points="150,166 240,166 240,156 300,156" fill="none" stroke="#16a34a" stroke-width="2"/>
+      <polyline points="150,186 300,186" fill="none" stroke="#0f172a" stroke-width="2"/>
+      <!-- Relay -->
+      <rect x="560" y="70" width="150" height="110" rx="8" fill="#f8fafc" stroke="#0f172a"/>
+      <text x="635" y="92" text-anchor="middle" font-weight="700">Relay module</text>
+      <text x="568" y="115" font-size="10">VCC</text><text x="568" y="135" font-size="10">IN</text><text x="568" y="155" font-size="10">GND</text>
+      <text x="702" y="115" text-anchor="end" font-size="10">COM</text><text x="702" y="135" text-anchor="end" font-size="10">NO</text>
+      <polyline points="450,126 520,126 520,111 560,111" fill="none" stroke="#dc2626" stroke-width="2"/>
+      <polyline points="450,156 530,156 530,131 560,131" fill="none" stroke="#ea580c" stroke-width="2"/>
+      <polyline points="450,246 540,246 540,151 560,151" fill="none" stroke="#0f172a" stroke-width="2"/>
+      <!-- LED -->
+      <polyline points="710,131 735,131 735,200" fill="none" stroke="#2563eb" stroke-width="2"/>
+      <polygon points="725,200 745,200 735,216" fill="#3b82f6" stroke="#1e3a8a"/><line x1="725" y1="216" x2="745" y2="216" stroke="#1e3a8a" stroke-width="2"/>
+      <text x="719" y="212" text-anchor="end" font-size="10" font-weight="700" fill="#1e3a8a">AC LED</text>
+      <rect x="729" y="230" width="12" height="30" fill="#fde68a" stroke="#92400e"/><text x="722" y="250" text-anchor="end" font-size="10">220 Ω</text>
+      <line x1="735" y1="216" x2="735" y2="230" stroke="#0f172a" stroke-width="2"/>
+      <polyline points="735,260 735,300 470,300 470,250 450,250" fill="none" stroke="#0f172a" stroke-width="2"/>
+      <text x="635" y="172" text-anchor="middle" font-size="9.5" fill="#dc2626">COM wired to 3V3</text>
+      <!-- LCD -->
+      <rect x="40" y="235" width="170" height="70" rx="8" fill="#14532d"/>
+      <rect x="52" y="247" width="146" height="34" rx="3" fill="#86efac"/>
+      <text x="58" y="261" font-family="Consolas" font-size="10.5" fill="#14532d">T:27.5C H: 55%</text>
+      <text x="58" y="276" font-family="Consolas" font-size="10.5" fill="#14532d">AUT SP:24 AC:ON</text>
+      <text x="125" y="298" text-anchor="middle" font-size="9.5" fill="#dcfce7">LCD 1602 I²C · 0x27</text>
+      <polyline points="210,255 280,255 280,320 490,320 490,186 450,186" fill="none" stroke="#16a34a" stroke-width="2" stroke-dasharray="5 3"/>
+      <polyline points="210,270 270,270 270,326 500,326 500,216 450,216" fill="none" stroke="#9333ea" stroke-width="2" stroke-dasharray="5 3"/>
+      <text x="380" y="316" text-anchor="middle" font-size="9.5" fill="#475569">I²C bus (SDA 21 / SCL 22) · LCD powered from 5V</text>
+    </svg>
+    <figcaption><b>Figure 2.</b> Simplified wiring diagram (implemented in <code>diagram.json</code>).</figcaption>
+  </figure>
+
+  <div class="box">
+    <p><b>Why the LED is wired through the relay contact.</b> The blue "AC" LED is powered from 3V3 through the relay's COM → NO contact, not from a GPIO. It lights only when the relay coil is energised and the contact actually closes, so it proves that the actuator chain works. A real compressor contactor is wired the same way.</p>
+  </div>
+
+  <h3>3.3 DHT11 vs DHT22</h3>
+  <p>The assignment specifies a DHT11, but Wokwi only provides a DHT22 part. Both sensors use the same single-wire protocol, the same pin-out and the same Adafruit library, so moving to real hardware only takes one line of code:</p>
+  <pre><span class="c">// Wokwi only provides a DHT22 part, so the simulation uses DHT22.</span>
+<span class="c">// On real DHT11 hardware, change to DHT11.</span>
+<span class="k">#define</span> DHTTYPE DHT22</pre>
+  <table>
+    <tr><th>Characteristic</th><th>DHT11</th><th>DHT22 (AM2302)</th></tr>
+    <tr><td>Temperature range / accuracy</td><td>0…50 °C / ±2 °C</td><td>−40…80 °C / ±0.5 °C</td></tr>
+    <tr><td>Humidity range / accuracy</td><td>20…80 % / ±5 %</td><td>0…100 % / ±2–5 %</td></tr>
+    <tr><td>Resolution</td><td>1 °C, 1 %</td><td>0.1 °C, 0.1 %</td></tr>
+    <tr><td>Max sampling rate</td><td>1 Hz</td><td>0.5 Hz (one reading every 2 s)</td></tr>
+  </table>
+  <p>The 2 s sampling period was chosen to respect the DHT22 limit, so the same firmware works with both sensors. With a DHT11, the 1 °C resolution is coarser than the ±0.5 °C hysteresis band. The thermostat still works, but it switches in whole-degree steps.</p>
+</section>
+
+<!-- ======================================================= 4 -->
+<section>
+  <h2><span class="num">4</span>Firmware design (ESP32)</h2>
+  <p>The firmware is written in C++ with the Arduino framework and built with PlatformIO (<code>board = esp32dev</code>). It is a single, commented source file (<code>src/main.cpp</code>) organised in functional blocks.</p>
+  <table>
+    <tr><th style="width:45mm">Block / function</th><th>Responsibility</th></tr>
+    <tr><td><code>setup()</code></td><td>Configure the pins, start the DHT and the LCD (shows "Connecting..."), build the unique client ID, start WiFi, configure the MQTT server and callback.</td></tr>
+    <tr><td><code>loop()</code></td><td>Calls three non-blocking handlers in sequence: <code>handleWifi()</code>, <code>handleMqtt()</code>, <code>handleSensor()</code>.</td></tr>
+    <tr><td><code>handleWifi()</code></td><td>Detects a lost connection and restarts the association every 10 s.</td></tr>
+    <tr><td><code>handleMqtt()</code></td><td>Services the client (<code>mqtt.loop()</code>) or retries the connection every 5 s with the Last Will; on success publishes <code>online</code> and subscribes to the commands.</td></tr>
+    <tr><td><code>handleSensor()</code></td><td>Every 2 s reads the DHT, rejects NaN, then calls <code>updateControl()</code>, <code>updateLcd()</code>, <code>publishTelemetry()</code>.</td></tr>
+    <tr><td><code>updateControl()</code></td><td>Thermostat (AUTO) or manual control (MANUAL), drives the relay through <code>setAc()</code>.</td></tr>
+    <tr><td><code>onMqttMessage()</code></td><td>Parses and validates the commands, then updates the state and publishes immediate feedback.</td></tr>
+    <tr><td><code>updateLcd()</code>, <code>publishTelemetry()</code></td><td>Output formatting: two 16-character LCD lines and the JSON telemetry message.</td></tr>
+  </table>
+
+  <h3>4.1 Non-blocking cooperative scheduling</h3>
+  <p>The main loop never waits. Each handler compares <code>millis()</code> with its last execution time and returns immediately when it isn't due yet. The loop therefore runs thousands of times per second, and incoming MQTT commands are processed with a latency of a few milliseconds even while the device is reconnecting or waiting for the next sensor reading. A <code>delay(2000)</code> would freeze command handling and the MQTT keep-alive for two seconds at a time.</p>
+  <pre><span class="k">void</span> <span class="n">loop</span>() {
+  handleWifi();    <span class="c">// reconnect WiFi if lost (every 10 s)</span>
+  handleMqtt();    <span class="c">// mqtt.loop() or reconnect (every 5 s)</span>
+  handleSensor();  <span class="c">// read DHT + control + publish (every 2 s)</span>
+}
+
+<span class="k">void</span> <span class="n">handleSensor</span>() {
+  <span class="k">unsigned long</span> now = millis();
+  <span class="k">if</span> (now - lastSensorMs &lt; SENSOR_INTERVAL) <span class="k">return</span>;   <span class="c">// not yet: return at once</span>
+  lastSensorMs = now;
+  <span class="k">float</span> t = dht.readTemperature();
+  <span class="k">float</span> h = dht.readHumidity();
+  <span class="k">if</span> (isnan(t) || isnan(h)) {
+    Serial.println(<span class="s">"[DHT]   Read error (NaN), reading skipped"</span>);
+    <span class="k">return</span>;
+  }
+  temperature = t; humidity = h;
+  updateControl(); updateLcd(); publishTelemetry();
+}</pre>
+  <p>The pattern <code>now - last &gt;= interval</code> uses unsigned arithmetic, so it stays correct when <code>millis()</code> overflows after about 49.7 days.</p>
+
+  <figure>
+    <svg viewBox="0 0 720 250" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial" font-size="11.5">
+      <defs><marker id="a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#334155"/></marker></defs>
+      <rect x="20" y="100" width="90" height="40" rx="20" fill="#0f172a"/><text x="65" y="124" text-anchor="middle" fill="#fff" font-weight="600">loop()</text>
+      <line x1="110" y1="120" x2="150" y2="120" stroke="#334155" stroke-width="1.6" marker-end="url(#a3)"/>
+      <!-- wifi -->
+      <polygon points="215,85 280,120 215,155 150,120" fill="#ecfeff" stroke="#0e7490"/><text x="215" y="117" text-anchor="middle" font-size="10.5">WiFi</text><text x="215" y="130" text-anchor="middle" font-size="10.5">connected?</text>
+      <text x="215" y="190" text-anchor="middle" font-size="10" fill="#475569">no → retry every 10 s</text>
+      <line x1="215" y1="155" x2="215" y2="175" stroke="#334155" stroke-width="1.2"/>
+      <line x1="280" y1="120" x2="320" y2="120" stroke="#334155" stroke-width="1.6" marker-end="url(#a3)"/>
+      <!-- mqtt -->
+      <polygon points="385,85 450,120 385,155 320,120" fill="#ecfeff" stroke="#0e7490"/><text x="385" y="117" text-anchor="middle" font-size="10.5">MQTT</text><text x="385" y="130" text-anchor="middle" font-size="10.5">connected?</text>
+      <text x="385" y="190" text-anchor="middle" font-size="10" fill="#475569">no → connect + LWT every 5 s</text>
+      <text x="385" y="205" text-anchor="middle" font-size="10" fill="#475569">yes → mqtt.loop() (callbacks)</text>
+      <line x1="385" y1="155" x2="385" y2="175" stroke="#334155" stroke-width="1.2"/>
+      <line x1="450" y1="120" x2="490" y2="120" stroke="#334155" stroke-width="1.6" marker-end="url(#a3)"/>
+      <!-- sensor -->
+      <polygon points="555,85 620,120 555,155 490,120" fill="#ecfeff" stroke="#0e7490"/><text x="555" y="117" text-anchor="middle" font-size="10.5">2 s</text><text x="555" y="130" text-anchor="middle" font-size="10.5">elapsed?</text>
+      <rect x="500" y="175" width="210" height="58" rx="8" fill="#f0fdf4" stroke="#16a34a"/>
+      <text x="605" y="196" text-anchor="middle" font-size="10.5">read DHT → reject NaN</text>
+      <text x="605" y="212" text-anchor="middle" font-size="10.5">updateControl → LCD</text>
+      <text x="605" y="226" text-anchor="middle" font-size="10.5">publish telemetry</text>
+      <line x1="555" y1="155" x2="555" y2="173" stroke="#334155" stroke-width="1.6" marker-end="url(#a3)"/><text x="563" y="168" font-size="9.5" fill="#16a34a">yes</text>
+      <polyline points="620,120 700,120 700,40 65,40 65,98" fill="none" stroke="#334155" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#a3)"/>
+      <text x="380" y="34" text-anchor="middle" font-size="10" fill="#475569">return immediately and repeat (thousands of iterations per second)</text>
+    </svg>
+    <figcaption><b>Figure 3.</b> Non-blocking main loop.</figcaption>
+  </figure>
+</section>
+
+<section>
+  <h3 style="margin-top:0">4.2 MQTT connection with Last Will and unique client ID</h3>
+  <p>The broker refuses two clients with the same client ID: the second one disconnects the first. A unique ID is therefore built from the factory MAC address stored in the ESP32 eFuses. When the device connects, it registers a <b>Last Will and Testament</b> (LWT). If the TCP connection drops without a clean disconnect (power loss, crash, network failure), the broker itself publishes <code>offline</code> on the status topic after the keep-alive timeout.</p>
+  <pre><span class="c">// Unique MQTT client ID built from the chip MAC address</span>
+<span class="k">uint64_t</span> mac = ESP.getEfuseMac();
+snprintf(clientId, <span class="k">sizeof</span>(clientId), <span class="s">"esp32-ac-%04X%08X"</span>, (<span class="k">uint16_t</span>)(mac &gt;&gt; <span class="n">32</span>), (<span class="k">uint32_t</span>)mac);
+
+<span class="c">// Last Will: broker publishes "offline" (retained, QoS 1) if we disappear</span>
+<span class="k">if</span> (mqtt.connect(clientId, TOPIC_STATUS, <span class="n">1</span>, <span class="k">true</span>, <span class="s">"offline"</span>)) {
+  digitalWrite(MQTT_LED_PIN, HIGH);
+  mqtt.publish(TOPIC_STATUS, <span class="s">"online"</span>, <span class="k">true</span>);       <span class="c">// retained</span>
+  mqtt.subscribe(TOPIC_CMD_MODE, <span class="n">1</span>);
+  mqtt.subscribe(TOPIC_CMD_POWER, <span class="n">1</span>);
+  mqtt.subscribe(TOPIC_CMD_SETPOINT, <span class="n">1</span>);
+  publishTelemetry();
+} <span class="k">else</span> {
+  Serial.printf(<span class="s">"[MQTT]  Failed, rc=%d, retry in %lus\n"</span>, mqtt.state(), MQTT_RETRY_INTERVAL / <span class="n">1000</span>);
+}</pre>
+  <p>Both <code>online</code> and the LWT <code>offline</code> are <b>retained</b>, so a dashboard that starts later immediately receives the last known presence state instead of waiting.</p>
+
+  <h3>4.3 Command handling and input validation</h3>
+  <p>All commands are trimmed and compared case-insensitively. Invalid values are rejected and logged, so a malformed message can never put the device in an undefined state. The setpoint is parsed with <code>strtof()</code> and an end-pointer check, so <code>"25abc"</code> or an empty string are refused, and it must lie in the 16–30 °C range.</p>
+  <pre><span class="k">else if</span> (strcmp(topic, TOPIC_CMD_POWER) == <span class="n">0</span>) {
+  <span class="k">if</span> (upper == <span class="s">"ON"</span> || upper == <span class="s">"OFF"</span>) {
+    <span class="k">if</span> (mode != MODE_MANUAL) mode = MODE_MANUAL;   <span class="c">// a power command forces MANUAL</span>
+    manualPower = (upper == <span class="s">"ON"</span>);
+    changed = <span class="k">true</span>;
+  }
+} <span class="k">else if</span> (strcmp(topic, TOPIC_CMD_SETPOINT) == <span class="n">0</span>) {
+  <span class="k">char</span> *end = <span class="k">nullptr</span>;
+  <span class="k">float</span> value = strtof(msg.c_str(), &amp;end);
+  <span class="k">bool</span> isNumber = (end != msg.c_str()) &amp;&amp; (*end == <span class="s">'\0'</span>);
+  <span class="k">if</span> (isNumber &amp;&amp; value &gt;= SETPOINT_MIN &amp;&amp; value &lt;= SETPOINT_MAX) { setpoint = value; changed = <span class="k">true</span>; }
+}
+<span class="k">if</span> (changed) { updateControl(); updateLcd(); publishTelemetry(); }   <span class="c">// immediate feedback</span></pre>
+
+  <h3>4.4 Local display (LCD 16×2)</h3>
+  <p>The LCD shows <code>Connecting...</code> at boot, then two lines refreshed after every reading or command. Each line is padded to 16 characters, so leftover characters from a longer previous text are erased without calling <code>lcd.clear()</code>, which would make the display flicker.</p>
+  <pre>T:27.5C H: 55%      <span class="c">// line 1: temperature and humidity</span>
+AUT SP:24 AC:ON     <span class="c">// line 2: mode (AUT/MAN), setpoint, compressor</span></pre>
+  <p>With a half-degree setpoint, the "AC:" label is dropped (for example <code>AUT SP:24.5 OFF</code>) so the line still fits in 16 characters.</p>
+
+  <h3>4.5 Libraries and build result</h3>
+  <table>
+    <tr><th>Library (PlatformIO <code>lib_deps</code>)</th><th>Use</th></tr>
+    <tr><td><code>adafruit/DHT sensor library</code> + <code>Adafruit Unified Sensor</code></td><td>DHT11/DHT22 single-wire protocol</td></tr>
+    <tr><td><code>knolleary/PubSubClient</code></td><td>MQTT 3.1.1 client (publish, subscribe, LWT)</td></tr>
+    <tr><td><code>marcoschwartz/LiquidCrystal_I2C</code></td><td>HD44780 LCD over the PCF8574 I²C backpack</td></tr>
+  </table>
+  <p>The project compiles with no errors (<code>pio run</code> → <b>SUCCESS</b>). Memory usage: <b>RAM 14.8 %</b> (48,592 / 327,680 bytes) and <b>Flash 70.5 %</b> (924,712 / 1,310,720 bytes). Most of the flash is taken by the WiFi and TCP/IP stacks.</p>
+</section>
+
+<!-- ======================================================= 5 -->
+<section>
+  <h2><span class="num">5</span>MQTT communication</h2>
+  <p>MQTT is a publish/subscribe protocol over TCP. Clients never address each other. They publish messages to <b>topics</b> on a broker, and the broker forwards each message to every client subscribed to that topic. All topics of the project share the hierarchical base <code>enp_iot/lotfi/ac</code>, which makes them unique on the public broker and easy to filter.</p>
+
+  <h3>5.1 Topic map</h3>
+  <table>
+    <tr><th>Topic (base <code>enp_iot/lotfi/ac</code>)</th><th>ESP32</th><th>Payload</th><th>QoS</th><th>Retain</th></tr>
+    <tr><td><code>/telemetry</code></td><td><span class="pill pub">publish</span></td><td>JSON state (see 5.2), every 2 s and after each command</td><td>0</td><td>no</td></tr>
+    <tr><td><code>/status</code></td><td><span class="pill pub">publish</span></td><td><code>online</code> on connect · <code>offline</code> as Last Will</td><td>1 (LWT)</td><td>yes</td></tr>
+    <tr><td><code>/cmd/mode</code></td><td><span class="pill sub">subscribe</span></td><td><code>AUTO</code> | <code>MANUAL</code></td><td>1</td><td>no</td></tr>
+    <tr><td><code>/cmd/power</code></td><td><span class="pill sub">subscribe</span></td><td><code>ON</code> | <code>OFF</code> (forces MANUAL)</td><td>1</td><td>no</td></tr>
+    <tr><td><code>/cmd/setpoint</code></td><td><span class="pill sub">subscribe</span></td><td>number, 16 … 30 (°C)</td><td>1</td><td>no</td></tr>
+  </table>
+
+  <h3>5.2 Telemetry message format</h3>
+  <pre>{ <span class="s">"temperature"</span>: <span class="n">27.5</span>, <span class="s">"humidity"</span>: <span class="n">55.0</span>, <span class="s">"ac"</span>: <span class="s">"ON"</span>, <span class="s">"mode"</span>: <span class="s">"AUTO"</span>, <span class="s">"setpoint"</span>: <span class="n">24.0</span> }</pre>
+  <p>The message carries the <b>complete state</b> of the device, not just the measurements. Any subscriber can rebuild the full picture from a single message, and the dashboard uses it to synchronise its controls (section 7.3). If no valid reading is available yet, the measurement fields are sent as JSON <code>null</code>.</p>
+
+  <h3>5.3 Design choices: QoS and retained messages</h3>
+  <ul>
+    <li><b>Telemetry, QoS 0, not retained.</b> A new value arrives every 2 s, so a lost message is replaced almost at once. QoS 0 avoids acknowledgement traffic.</li>
+    <li><b>Commands, QoS 1 (dashboard side and subscription).</b> A user action must not be silently lost. QoS 1 guarantees delivery at least once. The commands are idempotent ("set mode AUTO", "set power ON"), so a possible duplicate has no side effect.</li>
+    <li><b>Commands not retained.</b> A retained command would be replayed to the device at every reconnection and could override a newer local decision.</li>
+    <li><b>Status, retained and with LWT.</b> Presence is a <i>state</i>, not an event, so it must be available to late subscribers.</li>
+  </ul>
+
+  <h3>5.4 Message sequence</h3>
+  <figure>
+    <svg viewBox="0 0 720 360" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial" font-size="11">
+      <defs><marker id="a4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#0f172a"/></marker>
+            <marker id="a5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#7c3aed"/></marker>
+            <marker id="a6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#dc2626"/></marker></defs>
+      <g font-weight="700" text-anchor="middle" fill="#fff">
+        <rect x="60" y="8" width="120" height="30" rx="6" fill="#0f172a"/><text x="120" y="28">ESP32</text>
+        <rect x="300" y="8" width="120" height="30" rx="6" fill="#0e7490"/><text x="360" y="28">Broker</text>
+        <rect x="540" y="8" width="120" height="30" rx="6" fill="#8f0000"/><text x="600" y="28">Node-RED</text>
+      </g>
+      <g stroke="#94a3b8" stroke-dasharray="4 4"><line x1="120" y1="38" x2="120" y2="350"/><line x1="360" y1="38" x2="360" y2="350"/><line x1="600" y1="38" x2="600" y2="350"/></g>
+      <g stroke="#0f172a" stroke-width="1.5" fill="none">
+        <line x1="600" y1="60" x2="364" y2="60" marker-end="url(#a4)"/>
+        <line x1="120" y1="88" x2="356" y2="88" marker-end="url(#a4)"/>
+        <line x1="120" y1="112" x2="356" y2="112" marker-end="url(#a4)"/>
+        <line x1="360" y1="124" x2="596" y2="124" marker-end="url(#a4)"/>
+        <line x1="120" y1="148" x2="356" y2="148" marker-end="url(#a4)"/>
+        <line x1="120" y1="176" x2="356" y2="176" marker-end="url(#a4)"/>
+        <line x1="360" y1="188" x2="596" y2="188" marker-end="url(#a4)"/>
+      </g>
+      <g fill="#0f172a">
+        <text x="480" y="55" text-anchor="middle">SUBSCRIBE telemetry, status</text>
+        <text x="238" y="83" text-anchor="middle">CONNECT (client ID, LWT "offline")</text>
+        <text x="238" y="107" text-anchor="middle">PUBLISH status "online" (retained)</text>
+        <text x="480" y="119" text-anchor="middle">status → "🟢 Device online"</text>
+        <text x="238" y="143" text-anchor="middle">SUBSCRIBE cmd/mode, power, setpoint</text>
+        <text x="238" y="171" text-anchor="middle">PUBLISH telemetry (every 2 s)</text>
+        <text x="480" y="183" text-anchor="middle">gauges, tiles, chart updated</text>
+      </g>
+      <rect x="70" y="200" width="580" height="18" fill="#f5f3ff"/><text x="360" y="213" text-anchor="middle" fill="#7c3aed" font-weight="600">user toggles "AC power" on the dashboard</text>
+      <g stroke="#7c3aed" stroke-width="1.5" fill="none">
+        <line x1="600" y1="236" x2="364" y2="236" marker-end="url(#a5)"/>
+        <line x1="360" y1="250" x2="124" y2="250" marker-end="url(#a5)"/>
+        <line x1="120" y1="278" x2="356" y2="278" marker-end="url(#a5)"/>
+        <line x1="360" y1="290" x2="596" y2="290" marker-end="url(#a5)"/>
+      </g>
+      <g fill="#7c3aed">
+        <text x="480" y="231" text-anchor="middle">PUBLISH cmd/power "OFF" (QoS 1)</text>
+        <text x="238" y="245" text-anchor="middle">deliver → relay OFF, mode MANUAL</text>
+        <text x="238" y="273" text-anchor="middle">PUBLISH telemetry (immediate feedback)</text>
+        <text x="480" y="285" text-anchor="middle">switches synchronised to real state</text>
+      </g>
+      <rect x="70" y="302" width="580" height="18" fill="#fef2f2"/><text x="360" y="315" text-anchor="middle" fill="#dc2626" font-weight="600">ESP32 disappears (power loss / network failure)</text>
+      <line x1="360" y1="336" x2="596" y2="336" stroke="#dc2626" stroke-width="1.5" marker-end="url(#a6)"/>
+      <text x="480" y="331" text-anchor="middle" fill="#dc2626">broker publishes LWT "offline" (retained)</text>
+    </svg>
+    <figcaption><b>Figure 4.</b> MQTT sequence: start-up, periodic telemetry, remote command with feedback, and Last Will.</figcaption>
+  </figure>
+</section>
+
+<!-- ======================================================= 6 -->
+<section>
+  <h2><span class="num">6</span>Control logic</h2>
+  <h3>6.1 AUTO mode: thermostat with hysteresis</h3>
+  <p>In AUTO mode, the ESP32 is an on/off (bang-bang) controller with a <b>dead band</b> of width 2H = 1 °C centred on the setpoint SP. With the default values (SP = 24 °C, H = 0.5 °C):</p>
+  <table>
+    <tr><th>Condition</th><th>Action</th></tr>
+    <tr><td>T &gt; SP + H = 24.5 °C</td><td>Compressor <b>ON</b> (cooling)</td></tr>
+    <tr><td>T &lt; SP − H = 23.5 °C</td><td>Compressor <b>OFF</b></td></tr>
+    <tr><td>23.5 °C ≤ T ≤ 24.5 °C</td><td><b>Keep the current state</b> (memory effect)</td></tr>
+  </table>
+  <pre><span class="k">void</span> <span class="n">updateControl</span>() {
+  <span class="k">if</span> (mode == MODE_MANUAL) { setAc(manualPower); <span class="k">return</span>; }
+  <span class="k">if</span> (isnan(temperature)) <span class="k">return</span>;                 <span class="c">// no valid reading yet</span>
+  <span class="k">if</span>      (temperature &gt; setpoint + HYSTERESIS) setAc(<span class="k">true</span>);
+  <span class="k">else if</span> (temperature &lt; setpoint - HYSTERESIS) setAc(<span class="k">false</span>);
+  <span class="c">// inside [SP-0.5 ; SP+0.5] the relay keeps its state</span>
+}</pre>
+
+  <figure>
+    <svg viewBox="0 0 700 260" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial" font-size="11.5">
+      <defs><marker id="a7" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#0e7490"/></marker>
+            <marker id="ax" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#0f172a"/></marker></defs>
+      <rect x="290" y="40" width="120" height="170" fill="#ecfeff"/>
+      <text x="350" y="32" text-anchor="middle" fill="#0e7490" font-weight="600">dead band (1 °C)</text>
+      <line x1="80" y1="210" x2="660" y2="210" stroke="#0f172a" stroke-width="1.5" marker-end="url(#ax)"/>
+      <line x1="80" y1="210" x2="80" y2="30" stroke="#0f172a" stroke-width="1.5" marker-end="url(#ax)"/>
+      <text x="660" y="232" text-anchor="end">Temperature T (°C)</text>
+      <text x="70" y="214" text-anchor="end">OFF</text><text x="70" y="84" text-anchor="end">ON</text>
+      <text x="40" y="150" text-anchor="middle" transform="rotate(-90 40 150)">Compressor</text>
+      <g text-anchor="middle" fill="#334155"><text x="290" y="228">23.5</text><text x="350" y="228">SP = 24</text><text x="410" y="228">24.5</text></g>
+      <line x1="350" y1="40" x2="350" y2="210" stroke="#0e7490" stroke-dasharray="4 4"/>
+      <!-- heating path (OFF, rising) -->
+      <polyline points="100,200 410,200" fill="none" stroke="#0e7490" stroke-width="3"/>
+      <line x1="410" y1="200" x2="410" y2="88" stroke="#0e7490" stroke-width="3" marker-end="url(#a7)"/>
+      <polyline points="410,80 640,80" fill="none" stroke="#0e7490" stroke-width="3"/>
+      <!-- cooling path (ON, falling) -->
+      <polyline points="410,80 290,80" fill="none" stroke="#0e7490" stroke-width="3"/>
+      <line x1="290" y1="80" x2="290" y2="192" stroke="#0e7490" stroke-width="3" marker-end="url(#a7)"/>
+      <path d="M560,72 l-14,-6 v12 z" fill="#0e7490"/><text x="560" y="62" text-anchor="middle" fill="#0e7490" font-size="10.5">T falling (AC cooling)</text>
+      <path d="M194,200 l-14,-6 v12 z" fill="#0e7490"/><text x="180" y="186" text-anchor="middle" fill="#0e7490" font-size="10.5">T rising (AC idle)</text>
+      <text x="420" y="150" fill="#0f172a" font-size="10.5">switch ON at 24.5</text>
+      <text x="280" y="150" text-anchor="end" fill="#0f172a" font-size="10.5">switch OFF at 23.5</text>
+    </svg>
+    <figcaption><b>Figure 5.</b> Hysteresis loop of the thermostat. The output depends on both the temperature and the previous state.</figcaption>
+  </figure>
+
+  <div class="box">
+    <p><b>Why hysteresis prevents relay chattering.</b> With a single threshold (ON if T &gt; 24, OFF otherwise), sensor noise of a few tenths of a degree around 24 °C would make the relay switch on and off every reading, every 2 s. This <i>chattering</i> wears out the relay contacts by arcing and, above all, damages a real compressor, which must not be restarted within a few minutes of stopping. With the 1 °C dead band, once the AC starts, the room has to cool by a full degree before it stops, and warm by a full degree before it restarts. Noise smaller than the band can no longer cause a switch, and the cycle length is set by the thermal dynamics of the room rather than by noise. A wider band means fewer cycles but larger temperature swings: 1 °C is a good compromise between comfort and equipment life.</p>
+  </div>
+
+  <h3>6.2 MANUAL mode and mode transitions</h3>
+  <p>In MANUAL mode the thermostat is bypassed and the relay follows the last power command. The user can force the AC on or off whatever the temperature, for example to test the unit or to ventilate.</p>
+  <figure>
+    <svg viewBox="0 0 700 200" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial" font-size="11.5">
+      <defs><marker id="a8" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#0f172a"/></marker></defs>
+      <circle cx="40" cy="100" r="8" fill="#0f172a"/><line x1="48" y1="100" x2="128" y2="100" stroke="#0f172a" stroke-width="1.6" marker-end="url(#a8)"/><text x="88" y="92" text-anchor="middle" font-size="10">boot</text>
+      <rect x="130" y="60" width="170" height="80" rx="40" fill="#ecfeff" stroke="#0e7490" stroke-width="2"/>
+      <text x="215" y="95" text-anchor="middle" font-weight="700" fill="#0e7490" font-size="14">AUTO</text>
+      <text x="215" y="114" text-anchor="middle" font-size="10.5">thermostat ± 0.5 °C</text>
+      <rect x="440" y="60" width="170" height="80" rx="40" fill="#f5f3ff" stroke="#7c3aed" stroke-width="2"/>
+      <text x="525" y="95" text-anchor="middle" font-weight="700" fill="#7c3aed" font-size="14">MANUAL</text>
+      <text x="525" y="114" text-anchor="middle" font-size="10.5">relay = last ON/OFF</text>
+      <path d="M290,72 C350,30 390,30 450,72" fill="none" stroke="#0f172a" stroke-width="1.6" marker-end="url(#a8)"/>
+      <text x="370" y="30" text-anchor="middle">cmd/mode = MANUAL  or  cmd/power = ON|OFF</text>
+      <path d="M450,128 C390,170 350,170 290,128" fill="none" stroke="#0f172a" stroke-width="1.6" marker-end="url(#a8)"/>
+      <text x="370" y="178" text-anchor="middle">cmd/mode = AUTO</text>
+      <path d="M600,80 C660,60 660,140 600,120" fill="none" stroke="#0f172a" stroke-width="1.4" marker-end="url(#a8)"/>
+      <text x="668" y="104" font-size="10">power</text>
+      <path d="M140,80 C80,40 70,160 140,120" fill="none" stroke="#0f172a" stroke-width="1.4" marker-end="url(#a8)" opacity="0"/>
+      <text x="215" y="160" text-anchor="middle" font-size="10" fill="#475569">cmd/setpoint (16–30) accepted in both modes</text>
+    </svg>
+    <figcaption><b>Figure 6.</b> Operating-mode state machine.</figcaption>
+  </figure>
+  <ul>
+    <li><b>Entering MANUAL with <code>cmd/mode</code></b>: <code>manualPower</code> is initialised with the current relay state, so the compressor doesn't change abruptly at the moment of the switch.</li>
+    <li><b>A power command in AUTO</b> switches to MANUAL automatically. Otherwise the thermostat would override the user's command on the next reading.</li>
+    <li><b>Returning to AUTO</b> re-evaluates the thermostat at once with the last valid temperature. Inside the dead band, the current state is kept.</li>
+    <li>A <b>setpoint change</b> is accepted in both modes. In AUTO it takes effect immediately.</li>
+  </ul>
+</section>
+
+<!-- ======================================================= 7 -->
+<section>
+  <h2><span class="num">7</span>Node-RED supervision dashboard</h2>
+  <h3>7.1 Flow</h3>
+  <p>The whole application layer is a single Node-RED flow ("Smart AC") delivered as an importable <code>node-red/flows.json</code> file. A single <code>mqtt-broker</code> configuration node (broker.hivemq.com:1883) is shared by all MQTT nodes.</p>
+  <figure>
+    <img src="img/flow.png" alt="Node-RED flow">
+    <figcaption><b>Figure 7.</b> The Node-RED flow in the editor.</figcaption>
+  </figure>
+  <table>
+    <tr><th style="width:40mm">Node</th><th style="width:25mm">Type</th><th>Role</th></tr>
+    <tr><td>Telemetry</td><td>mqtt in</td><td>Subscribes to <code>/telemetry</code>, parses the JSON.</td></tr>
+    <tr><td>Split telemetry</td><td>function (9 outputs)</td><td>Dispatches each field to its widget, builds the two chart series, detects state changes for the activity log, and raises the alert once when T ≥ 35 °C (re-armed below 35 °C).</td></tr>
+    <tr><td>Status (LWT)</td><td>mqtt in + function</td><td>Converts <code>online</code>/<code>offline</code> into the header badge and an activity-log event.</td></tr>
+    <tr><td>Overview state</td><td>function</td><td>Merges status and telemetry into one state object (with the time of the last update) for the header template.</td></tr>
+    <tr><td>Automatic mode / AC power / Setpoint</td><td>ui_switch, ui_slider</td><td>User commands, sent to <code>cmd/mode</code>, <code>cmd/power</code>, <code>cmd/setpoint</code> through three <i>mqtt out</i> nodes (QoS 1). The slider sends only when released.</td></tr>
+    <tr><td>Activity log</td><td>function + ui_template</td><td>Keeps the last 12 events (commands, state changes, presence, alerts) in node context.</td></tr>
+    <tr><td>Temperature / Humidity / History</td><td>ui_gauge, ui_chart</td><td>Live gauges and a 10-minute line chart.</td></tr>
+    <tr><td>High temperature alert</td><td>ui_toast</td><td>Red pop-up notification.</td></tr>
+    <tr><td>Dashboard style</td><td>ui_template (global)</td><td>CSS theme injected into the page head.</td></tr>
+  </table>
+</section>
+
+<section>
+  <h3 style="margin-top:0">7.2 User interface</h3>
+  <figure>
+    <img src="img/dashboard.png" alt="Dashboard">
+    <figcaption><b>Figure 8.</b> The dashboard (http://localhost:1880/ui), dark theme. This screenshot was taken during a test run with emulated telemetry (see section 8.1).</figcaption>
+  </figure>
+  <table>
+    <tr><th style="width:38mm">Area</th><th>Content</th></tr>
+    <tr><td>Header</td><td>Title, <i>Device online/offline</i> badge driven by the Last Will, time of the last telemetry.</td></tr>
+    <tr><td>KPI tiles</td><td>Compressor state (animated fan when cooling), operating mode, setpoint with its hysteresis band, room temperature/humidity and the difference from the setpoint.</td></tr>
+    <tr><td>Live measurements</td><td>Temperature gauge 0–50 °C (blue &lt; 22 °C, green 22–30 °C, red &gt; 30 °C) and humidity wave gauge 0–100 %.</td></tr>
+    <tr><td>Air conditioner control</td><td>"Automatic mode" switch, "AC power (manual)" switch, "Setpoint" slider 16–30 °C in 0.5 °C steps.</td></tr>
+    <tr><td>Activity</td><td>Time-stamped log of commands and events.</td></tr>
+    <tr><td>History</td><td>Temperature and humidity over the last 10 minutes.</td></tr>
+  </table>
+
+  <h3>7.3 State synchronisation without command loops</h3>
+  <p>A common mistake in IoT dashboards is to let the controls show what the <i>user clicked</i> rather than what the <i>device is actually doing</i>. Here, every control is driven by the telemetry. The switches and the slider receive the <code>mode</code>, <code>ac</code> and <code>setpoint</code> fields of every telemetry message, with the <b><code>passthru: false</code></b> option:</p>
+  <ul>
+    <li>An incoming message <b>updates the widget display</b> without forwarding it to the output, so the feedback is never re-published as a new command (no MQTT loop).</li>
+    <li>If a command is rejected (setpoint out of range) or not received (device offline), the widget returns to the real value at the next telemetry message.</li>
+    <li>When the user sends a power command in AUTO mode, the device switches to MANUAL by itself. The "Automatic mode" switch then turns off automatically, because the device reports <code>"mode":"MANUAL"</code>.</li>
+  </ul>
+  <p>The device always holds the state. The dashboard is only a view of it plus a way to send requests. This is the same principle as the "device shadow" in commercial IoT platforms.</p>
+</section>
+
+<!-- ======================================================= 8 -->
+<section>
+  <h2><span class="num">8</span>Verification and test plan</h2>
+  <h3>8.1 Verification carried out</h3>
+  <table>
+    <tr><th style="width:52mm">Check</th><th>Method and result</th></tr>
+    <tr><td>Firmware compilation</td><td><code>pio run</code>: build <b>SUCCESS</b>, no errors; RAM 14.8 %, Flash 70.5 %. Binaries produced where <code>wokwi.toml</code> expects them (<code>.pio/build/esp32dev/firmware.bin</code> and <code>.elf</code>).</td></tr>
+    <tr><td>Node-RED flow integrity</td><td>The flow file is generated and checked automatically: valid JSON, 29 nodes, no duplicate IDs, every wire, group, tab and broker reference resolves to an existing node, and every function node's code compiles.</td></tr>
+    <tr><td>Broker connectivity</td><td>Node-RED log: <i>"Connected to broker: mqtt://broker.hivemq.com:1883"</i>.</td></tr>
+    <tr><td>Dashboard end to end (application side)</td><td>Telemetry messages in the exact firmware format were published to the project topics on the public broker. The dashboard received them, and the gauges, tiles, chart, online badge and activity log updated correctly (Figure 8).</td></tr>
+  </table>
+
+  <h3>8.2 Demonstration test plan (Wokwi simulation)</h3>
+  <p>The test plan below exercises every requirement. The temperature is changed live by clicking the DHT22 in the Wokwi simulator and moving its slider. Initial conditions: T = 28 °C, H = 55 %, SP = 24 °C, AUTO mode.</p>
+  <table>
+    <tr><th style="width:8mm">#</th><th style="width:58mm">Action</th><th>Expected result</th><th style="width:10mm">Req.</th></tr>
+    <tr><td>1</td><td>Start the simulation</td><td>LCD "Connecting...", then the readings. On-board LED ON (MQTT connected). 28 &gt; 24.5, so the relay closes and the blue AC LED lights. Dashboard: <i>Device online</i>, compressor ON.</td><td>F1 F2 F6</td></tr>
+    <tr><td>2</td><td>Set T to 22 °C</td><td>22 &lt; 23.5, so the AC turns OFF: LED off, LCD <code>AC:OFF</code>, dashboard updates within 2 s.</td><td>F2</td></tr>
+    <tr><td>3</td><td>Set T to 24.2 °C</td><td>Inside the dead band: <b>no change</b> (stays OFF). This demonstrates the hysteresis.</td><td>F2</td></tr>
+    <tr><td>4</td><td>Set T to 25 °C</td><td>25 &gt; 24.5, so the AC turns ON.</td><td>F2</td></tr>
+    <tr><td>5</td><td>Set T back to 24.2 °C</td><td>Inside the dead band: <b>stays ON</b>. Same temperature as step 3 with the opposite state, which shows the memory effect.</td><td>F2</td></tr>
+    <tr><td>6</td><td>Set T to 36 °C</td><td>Red toast "High temperature" on the dashboard (once), alert entry in the activity log.</td><td>F7</td></tr>
+    <tr><td>7</td><td>Toggle "AC power (manual)" OFF</td><td>Serial <code>[MQTT] RECV .../cmd/power -&gt; "OFF"</code>. Mode becomes MANUAL ("Automatic mode" switch turns off by itself), AC OFF although T = 36 °C, LCD <code>MAN</code>.</td><td>F3 F5</td></tr>
+    <tr><td>8</td><td>Toggle power ON, then OFF</td><td>Relay and LED follow each command immediately.</td><td>F3</td></tr>
+    <tr><td>9</td><td>Turn "Automatic mode" ON</td><td>Thermostat resumes: T = 36 &gt; 24.5, so the AC turns ON.</td><td>F2</td></tr>
+    <tr><td>10</td><td>Set T to 28 °C, move the setpoint slider to 30 and release</td><td>LCD <code>SP:30</code>. 28 &lt; 29.5, so the AC turns OFF. Activity log: "Setpoint set to 30.0 °C".</td><td>F4</td></tr>
+    <tr><td>11</td><td>Publish <code>45</code> on <code>cmd/setpoint</code> (e.g. with MQTT Explorer)</td><td>Serial "Setpoint rejected (must be 16..30)". Setpoint unchanged.</td><td>F4</td></tr>
+    <tr><td>12</td><td>Stop the simulator</td><td>After the keep-alive timeout (~20 s) the broker publishes the LWT. Dashboard badge: <i>Device offline</i>.</td><td>F6</td></tr>
+  </table>
+  <div class="box"><p><b>Serial monitor traces.</b> Every publication and every received command is logged with a prefix (<code>[WiFi]</code>, <code>[MQTT] PUB</code>, <code>[MQTT] RECV</code>, <code>[CMD]</code>, <code>[DHT]</code>, <code>[AC]</code>), which makes it easy to follow the behaviour during the demonstration.</p></div>
+</section>
+
+<!-- ======================================================= 9 -->
+<section>
+  <h2><span class="num">9</span>Limitations and possible improvements</h2>
+  <h3>9.1 Current limitations</h3>
+  <ul>
+    <li><b>Public broker.</b> <code>broker.hivemq.com</code> is shared by everyone. Anyone who knows the topic names can read the telemetry or <b>send commands to the air conditioner</b>. This is acceptable for a demonstration, but not for a real installation.</li>
+    <li><b>No encryption and no authentication.</b> MQTT over plain TCP (port 1883) sends everything, including commands, in clear text.</li>
+    <li><b>State not persistent.</b> The setpoint and the mode are kept in RAM and return to the defaults (24 °C, AUTO) after a reboot.</li>
+    <li><b>Volatile history.</b> The chart only keeps 10 minutes in the browser. No data is stored for long-term analysis.</li>
+    <li><b>Simplified actuator.</b> A relay represents the compressor. A real split-system AC is controlled by infrared commands, and switching its power line directly would bypass its own protections.</li>
+    <li><b>Simple on/off control.</b> A bang-bang controller cannot modulate power, unlike an inverter AC.</li>
+  </ul>
+  <h3>9.2 Possible improvements</h3>
+  <table>
+    <tr><th style="width:45mm">Improvement</th><th>Description</th></tr>
+    <tr><td>Security</td><td>Private broker (e.g. Mosquitto) with username/password, <b>TLS on port 8883</b> (<code>WiFiClientSecure</code>), per-topic ACLs so that only the dashboard can publish on <code>cmd/#</code>.</td></tr>
+    <tr><td>Data storage</td><td>Store the telemetry in a time-series database (<b>InfluxDB</b>) and build long-term dashboards in <b>Grafana</b> (daily consumption, compressor duty cycle).</td></tr>
+    <tr><td>Real AC control</td><td>Replace the relay with an <b>IR LED</b> and the <code>IRremoteESP8266</code> library to send the manufacturer's codes (mode, temperature, fan speed) to a real split unit.</td></tr>
+    <tr><td>Persistence</td><td>Save the setpoint and the mode in flash (<code>Preferences</code>/NVS) so they survive a reboot.</td></tr>
+    <tr><td>Compressor protection</td><td>Minimum OFF time (anti-short-cycle delay of about 3 min) before restarting.</td></tr>
+    <tr><td>Scheduling and presence</td><td>Night/eco schedules, presence detection (PIR) to stop cooling empty rooms.</td></tr>
+    <tr><td>Maintenance</td><td>Over-the-air (OTA) firmware updates; Home Assistant integration through MQTT discovery.</td></tr>
+  </table>
+</section>
+
+<!-- ======================================================= 10 -->
+<section>
+  <h2><span class="num">10</span>Conclusion</h2>
+  <p>This project delivers a complete IoT chain for a smart air conditioner, from the sensor to the user interface. The ESP32 measures the environment, regulates the temperature locally with a hysteresis thermostat that protects the actuator from chattering, and stays fully responsive thanks to a non-blocking design. MQTT decouples the device from the application: telemetry carries the full device state, commands use QoS 1, and a retained Last Will gives the dashboard reliable presence detection. The Node-RED dashboard provides monitoring, history, alerts and remote control, and stays synchronised with the real device state without command loops.</p>
+  <p>The work covers the main concepts of the course: sensor acquisition, actuation, embedded control, the publish/subscribe pattern, QoS and retained messages, Last Will and Testament, and data visualisation. The whole system runs in simulation and is reproducible on any computer. The main next step towards a real product is security (private broker with TLS and authentication), followed by data storage and infrared control of a real unit.</p>
+
+  <h2 style="margin-top:12mm"><span class="num">A</span>Appendix – project files and how to run</h2>
+  <h3>A.1 Project structure</h3>
+  <pre>smart-ac-iot/
+├── platformio.ini        <span class="c"># board esp32dev, Arduino framework, library dependencies</span>
+├── wokwi.toml            <span class="c"># points Wokwi to .pio/build/esp32dev/firmware.bin / .elf</span>
+├── diagram.json          <span class="c"># simulated circuit (ESP32, DHT22, relay, LED, LCD)</span>
+├── src/main.cpp          <span class="c"># firmware</span>
+├── node-red/flows.json   <span class="c"># importable Node-RED flow + dashboard</span>
+└── README.md             <span class="c"># documentation</span></pre>
+  <h3>A.2 Running the simulation</h3>
+  <ol>
+    <li>Install the <b>PlatformIO IDE</b> and <b>Wokwi Simulator</b> extensions in VS Code (free Wokwi licence: <i>Wokwi: Request a New License</i>).</li>
+    <li>Open the <code>smart-ac-iot</code> folder and build: <code>pio run</code>.</li>
+    <li><code>F1</code> → <b>Wokwi: Start Simulator</b>. The serial monitor shows the connection and the MQTT traffic.</li>
+  </ol>
+  <h3>A.3 Running the dashboard</h3>
+  <ol>
+    <li><code>npm install -g node-red</code>, then start it with <code>node-red</code>.</li>
+    <li>Open http://localhost:1880, then go to Menu → <i>Manage palette</i> → install <code>node-red-dashboard</code>.</li>
+    <li>Menu → <i>Import</i> → <code>node-red/flows.json</code> → <b>Deploy</b>.</li>
+    <li>Open <b>http://localhost:1880/ui</b> in a web browser.</li>
+  </ol>
+</section>
+
+</body>
+</html>

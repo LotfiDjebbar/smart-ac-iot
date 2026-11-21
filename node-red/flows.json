@@ -1,0 +1,704 @@
+[
+  {
+    "id": "smartac_tab",
+    "type": "tab",
+    "label": "Smart AC",
+    "disabled": false,
+    "info": "Smart Air Conditioner - ESP32 + DHT + MQTT (Djebbar Lotfi)"
+  },
+  {
+    "id": "mqtt_broker_hivemq",
+    "type": "mqtt-broker",
+    "name": "HiveMQ public",
+    "broker": "broker.hivemq.com",
+    "port": "1883",
+    "clientid": "",
+    "autoConnect": true,
+    "usetls": false,
+    "protocolVersion": "4",
+    "keepalive": "60",
+    "cleansession": true,
+    "autoUnsubscribe": true,
+    "birthTopic": "",
+    "birthQos": "0",
+    "birthPayload": "",
+    "birthMsg": {},
+    "closeTopic": "",
+    "closeQos": "0",
+    "closePayload": "",
+    "closeMsg": {},
+    "willTopic": "",
+    "willQos": "0",
+    "willPayload": "",
+    "willMsg": {},
+    "userProps": "",
+    "sessionExpiry": ""
+  },
+  {
+    "id": "ui_base_smartac",
+    "type": "ui_base",
+    "theme": {
+      "name": "theme-dark",
+      "lightTheme": {
+        "default": "#0094CE",
+        "baseColor": "#0094CE",
+        "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+        "edited": true,
+        "reset": false
+      },
+      "darkTheme": {
+        "default": "#097479",
+        "baseColor": "#22d3ee",
+        "baseFont": "Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif",
+        "edited": true,
+        "reset": false
+      },
+      "customTheme": {
+        "name": "Untitled Theme 1",
+        "default": "#4B7930",
+        "baseColor": "#4B7930",
+        "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif",
+        "reset": false
+      },
+      "themeState": {
+        "base-color": {
+          "default": "#097479",
+          "value": "#22d3ee",
+          "edited": true
+        },
+        "page-titlebar-backgroundColor": {
+          "value": "#0b1120",
+          "edited": true
+        },
+        "page-backgroundColor": {
+          "value": "#0b1120",
+          "edited": true
+        },
+        "page-sidebar-backgroundColor": {
+          "value": "#111827",
+          "edited": true
+        },
+        "group-textColor": {
+          "value": "#94a3b8",
+          "edited": true
+        },
+        "group-borderColor": {
+          "value": "#1f2937",
+          "edited": true
+        },
+        "group-backgroundColor": {
+          "value": "#111827",
+          "edited": true
+        },
+        "widget-textColor": {
+          "value": "#e5e7eb",
+          "edited": true
+        },
+        "widget-backgroundColor": {
+          "value": "#22d3ee",
+          "edited": true
+        },
+        "widget-borderColor": {
+          "value": "#111827",
+          "edited": true
+        },
+        "base-font": {
+          "value": "Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif"
+        }
+      },
+      "angularTheme": {
+        "primary": "cyan",
+        "accents": "cyan",
+        "warn": "red",
+        "background": "grey",
+        "palette": "dark"
+      }
+    },
+    "site": {
+      "name": "Smart AC · Djebbar Lotfi",
+      "hideToolbar": "true",
+      "allowSwipe": "false",
+      "lockMenu": "false",
+      "allowTempTheme": "false",
+      "dateFormat": "DD/MM/YYYY",
+      "sizes": {
+        "sx": 48,
+        "sy": 48,
+        "gx": 12,
+        "gy": 12,
+        "cx": 12,
+        "cy": 12,
+        "px": 0,
+        "py": 0
+      }
+    }
+  },
+  {
+    "id": "ui_tab_smartac",
+    "type": "ui_tab",
+    "name": "Smart AC",
+    "icon": "dashboard",
+    "order": 1,
+    "disabled": false,
+    "hidden": false
+  },
+  {
+    "id": "ui_grp_overview",
+    "type": "ui_group",
+    "name": "Overview",
+    "tab": "ui_tab_smartac",
+    "order": 1,
+    "disp": false,
+    "width": "18",
+    "collapse": false,
+    "className": ""
+  },
+  {
+    "id": "ui_grp_live",
+    "type": "ui_group",
+    "name": "Live measurements",
+    "tab": "ui_tab_smartac",
+    "order": 2,
+    "disp": true,
+    "width": "6",
+    "collapse": false,
+    "className": ""
+  },
+  {
+    "id": "ui_grp_ctrl",
+    "type": "ui_group",
+    "name": "Air conditioner control",
+    "tab": "ui_tab_smartac",
+    "order": 3,
+    "disp": true,
+    "width": "6",
+    "collapse": false,
+    "className": ""
+  },
+  {
+    "id": "ui_grp_log",
+    "type": "ui_group",
+    "name": "Activity",
+    "tab": "ui_tab_smartac",
+    "order": 4,
+    "disp": true,
+    "width": "6",
+    "collapse": false,
+    "className": ""
+  },
+  {
+    "id": "ui_grp_hist",
+    "type": "ui_group",
+    "name": "History · last 10 minutes",
+    "tab": "ui_tab_smartac",
+    "order": 5,
+    "disp": true,
+    "width": "18",
+    "collapse": false,
+    "className": ""
+  },
+  {
+    "type": "ui_template",
+    "z": "smartac_tab",
+    "storeOutMessages": true,
+    "fwdInMessages": false,
+    "resendOnRefresh": true,
+    "templateScope": "global",
+    "className": "",
+    "wires": [
+      []
+    ],
+    "id": "tpl_style",
+    "name": "Dashboard style (CSS)",
+    "group": "",
+    "order": 0,
+    "width": 0,
+    "height": 0,
+    "format": "<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n<link href=\"https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap\" rel=\"stylesheet\">\n<style>\n:root {\n  --sac-bg: #0b1120; --sac-card: #111827; --sac-card2: #0f172a; --sac-border: #1f2937;\n  --sac-text: #e5e7eb; --sac-muted: #94a3b8; --sac-accent: #22d3ee;\n  --sac-ok: #22c55e; --sac-bad: #ef4444; --sac-warn: #f59e0b; --sac-cmd: #818cf8;\n}\nbody.nr-dashboard-theme, body.nr-dashboard-theme md-content, body.nr-dashboard-theme #Tab_content {\n  background: var(--sac-bg) !important;\n}\nbody, md-card, ui-card-panel, .nr-dashboard-template, md-toast {\n  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif !important;\n}\n/* Cards (groups) */\n.nr-dashboard-theme ui-card-panel {\n  background: var(--sac-card) !important;\n  border: 1px solid var(--sac-border) !important;\n  border-radius: 14px !important;\n  box-shadow: 0 8px 24px rgba(0, 0, 0, .35) !important;\n  overflow: hidden;\n}\n.nr-dashboard-theme ui-card-panel p.nr-dashboard-cardtitle {\n  color: var(--sac-muted) !important;\n  font-size: 11px !important; font-weight: 600 !important;\n  letter-spacing: .12em; text-transform: uppercase;\n  padding: 12px 16px 0 !important; margin: 0 !important;\n  width: auto !important; box-sizing: border-box !important;\n}\n.nr-dashboard-theme .nr-dashboard-cardpanel { overflow: hidden; }\n.nr-dashboard-theme .nr-dashboard-template { padding: 0 !important; background: transparent !important; }\n.nr-dashboard-theme .nr-dashboard-switch, .nr-dashboard-theme .nr-dashboard-slider { padding: 0 16px !important; box-sizing: border-box !important; }\n.nr-dashboard-theme .nr-dashboard-chart { padding: 0 14px 10px !important; box-sizing: border-box; }\n.nr-dashboard-theme .nr-dashboard-gauge { padding-top: 6px; }\n.nr-dashboard-theme .nr-dashboard-switch .label, .nr-dashboard-theme .nr-dashboard-slider p.label {\n  color: var(--sac-text) !important; font-size: 14px !important; font-weight: 500;\n}\n.nr-dashboard-theme md-switch.md-checked .md-bar { background-color: rgba(34, 211, 238, .45) !important; }\n.nr-dashboard-theme md-switch.md-checked .md-thumb { background-color: var(--sac-accent) !important; }\n.nr-dashboard-theme md-slider .md-track-fill, .nr-dashboard-theme md-slider .md-thumb:after { background-color: var(--sac-accent) !important; border-color: var(--sac-accent) !important; }\n.nr-dashboard-theme md-slider .md-sign { background-color: var(--sac-accent) !important; }\n.nr-dashboard-theme md-slider .md-sign:after { border-top-color: var(--sac-accent) !important; }\n.nr-dashboard-theme md-slider .md-thumb-text { color: #0b1120 !important; font-weight: 700; }\n.nr-dashboard-theme .nr-dashboard-gauge .gage-title, .nr-dashboard-theme .nr-dashboard-gauge text { font-family: 'Inter', sans-serif !important; }\nmd-toast.md-default-theme .md-toast-content, md-toast .md-toast-content {\n  background: #7f1d1d !important; border: 1px solid #ef4444; border-radius: 10px !important; font-weight: 500;\n}\n\n/* Header + KPI tiles */\n.sac-wrap { padding: 18px 20px; color: var(--sac-text); }\n.sac-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }\n.sac-brand { display: flex; align-items: center; gap: 14px; }\n.sac-logo { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center;\n  background: linear-gradient(135deg, #0891b2, #22d3ee); color: #0b1120; font-size: 22px;\n  box-shadow: 0 6px 18px rgba(34, 211, 238, .35); }\n.sac-h1 { font-size: 20px; font-weight: 700; letter-spacing: -.01em; line-height: 1.2; }\n.sac-sub { font-size: 12.5px; color: var(--sac-muted); margin-top: 2px; }\n.sac-meta { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }\n.sac-pill { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px;\n  font-size: 12.5px; font-weight: 600; border: 1px solid; }\n.sac-pill .dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }\n.sac-pill.ok { color: var(--sac-ok); background: rgba(34, 197, 94, .1); border-color: rgba(34, 197, 94, .35); }\n.sac-pill.ok .dot { animation: sac-pulse 1.8s infinite; }\n.sac-pill.bad { color: var(--sac-bad); background: rgba(239, 68, 68, .1); border-color: rgba(239, 68, 68, .35); }\n.sac-updated { font-size: 12.5px; color: var(--sac-muted); }\n.sac-updated b { color: var(--sac-text); font-weight: 600; font-variant-numeric: tabular-nums; }\n.sac-tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 18px; }\n.sac-tile { background: var(--sac-card2); border: 1px solid var(--sac-border); border-radius: 12px; padding: 14px 16px;\n  transition: border-color .3s, box-shadow .3s; }\n.sac-tile.on { border-color: rgba(34, 211, 238, .55); box-shadow: inset 0 0 0 1px rgba(34, 211, 238, .15), 0 0 24px rgba(34, 211, 238, .12); }\n.sac-tile-top { display: flex; align-items: center; justify-content: space-between; font-size: 11px; font-weight: 600;\n  letter-spacing: .1em; text-transform: uppercase; color: var(--sac-muted); }\n.sac-tile-top .fa { font-size: 15px; color: var(--sac-muted); }\n.sac-fan { width: 18px; height: 18px; color: var(--sac-muted); }\n.sac-tile.on .sac-fan { color: var(--sac-accent); animation: sac-spin 1s linear infinite; }\n.sac-val { font-size: 28px; font-weight: 700; margin-top: 8px; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }\n.sac-val small { font-size: 14px; font-weight: 500; color: var(--sac-muted); margin-left: 2px; }\n.sac-tile.on .sac-val { color: var(--sac-accent); }\n.sac-cap { font-size: 12px; color: var(--sac-muted); margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }\n@keyframes sac-spin { to { transform: rotate(360deg); } }\n@keyframes sac-pulse { 0%,100% { opacity: 1; } 50% { opacity: .35; } }\n@media (max-width: 760px) { .sac-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }\n\n/* Hint under the controls */\n.sac-hint { margin: 4px 14px 0; padding: 10px 12px; border-radius: 10px; font-size: 12px; line-height: 1.45;\n  color: var(--sac-muted); background: var(--sac-card2); border: 1px solid var(--sac-border); }\n.sac-hint b { color: var(--sac-text); font-weight: 600; }\n\n/* Activity log */\n.sac-log { padding: 6px 14px 10px; height: 100%; overflow-y: auto; box-sizing: border-box; }\n.sac-log-row { display: flex; align-items: center; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--sac-border); font-size: 12.5px; }\n.sac-log-row:last-child { border-bottom: 0; }\n.sac-log-dot { width: 7px; height: 7px; border-radius: 50%; flex: none; background: var(--sac-muted); }\n.sac-log-row.ok .sac-log-dot { background: var(--sac-ok); }\n.sac-log-row.alert .sac-log-dot { background: var(--sac-bad); }\n.sac-log-row.cmd .sac-log-dot { background: var(--sac-cmd); }\n.sac-log-text { flex: 1; color: var(--sac-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }\n.sac-log-time { color: var(--sac-muted); font-variant-numeric: tabular-nums; font-size: 11.5px; }\n.sac-log-empty { color: var(--sac-muted); font-size: 12.5px; padding: 12px 0; }\n</style>",
+    "x": 140,
+    "y": 40
+  },
+  {
+    "id": "in_telemetry",
+    "type": "mqtt in",
+    "z": "smartac_tab",
+    "name": "Telemetry",
+    "topic": "enp_iot/lotfi/ac/telemetry",
+    "qos": "1",
+    "datatype": "json",
+    "broker": "mqtt_broker_hivemq",
+    "nl": false,
+    "rap": true,
+    "rh": 0,
+    "inputs": 0,
+    "x": 110,
+    "y": 240,
+    "wires": [
+      [
+        "fn_split"
+      ]
+    ]
+  },
+  {
+    "type": "function",
+    "z": "smartac_tab",
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "id": "fn_split",
+    "name": "Split telemetry",
+    "func": "// Split the ESP32 telemetry JSON into one message per dashboard widget.\n// Outputs: 1 temp gauge, 2 humidity gauge, 3 mode switch, 4 power switch,\n//          5 setpoint slider, 6 overview state, 7 history chart,\n//          8 high-temperature alert (toast), 9 activity-log events\nconst d = msg.payload;\nif (typeof d !== 'object' || d === null) {\n    node.warn('Invalid telemetry: ' + JSON.stringify(msg.payload));\n    return null;\n}\nconst hasT = typeof d.temperature === 'number';\nconst hasH = typeof d.humidity === 'number';\n\nconst temp  = hasT ? { payload: d.temperature } : null;\nconst hum   = hasH ? { payload: d.humidity } : null;\nconst mode  = { payload: d.mode };          // \"AUTO\" | \"MANUAL\"\nconst power = { payload: d.ac };            // \"ON\"   | \"OFF\"\nconst sp    = { payload: d.setpoint };      // number\nconst overview = { topic: 'telemetry', payload: d };\n\n// Chart: one message per series (topic = series name)\nconst chart = [];\nif (hasT) chart.push({ topic: 'Temperature (°C)', payload: d.temperature });\nif (hasH) chart.push({ topic: 'Humidity (%)', payload: d.humidity });\n\n// Alert once when temperature reaches 35 °C (re-armed when it drops below)\nlet alert = null;\nconst hot = hasT && d.temperature >= 35;\nif (hot && !context.get('alerted')) {\n    alert = {\n        topic: 'High temperature',\n        payload: 'Room temperature is ' + d.temperature.toFixed(1) + ' °C (limit 35 °C)'\n    };\n}\ncontext.set('alerted', hot);\n\n// Activity log: report state changes only\nconst events = [];\nconst prev = context.get('prev');\nconst ev = (text, level) => events.push({ topic: 'event', payload: text, level: level });\nif (!prev) {\n    ev('First telemetry received from the ESP32', 'info');\n} else {\n    if (prev.ac !== d.ac)\n        ev('Compressor ' + d.ac + (hasT ? ' at ' + d.temperature.toFixed(1) + ' °C' : ''), d.ac === 'ON' ? 'ok' : 'info');\n    if (prev.mode !== d.mode) ev('Mode changed to ' + d.mode, 'info');\n    if (prev.setpoint !== d.setpoint) ev('Setpoint set to ' + d.setpoint.toFixed(1) + ' °C', 'info');\n}\nif (alert) ev(alert.payload, 'alert');\ncontext.set('prev', { ac: d.ac, mode: d.mode, setpoint: d.setpoint });\n\nreturn [temp, hum, mode, power, sp, overview, chart, alert, events];",
+    "outputs": 9,
+    "x": 320,
+    "y": 240,
+    "wires": [
+      [
+        "gauge_temp"
+      ],
+      [
+        "gauge_hum"
+      ],
+      [
+        "sw_mode"
+      ],
+      [
+        "sw_power"
+      ],
+      [
+        "slider_sp"
+      ],
+      [
+        "fn_overview"
+      ],
+      [
+        "chart_hist"
+      ],
+      [
+        "toast_alert"
+      ],
+      [
+        "fn_log"
+      ]
+    ]
+  },
+  {
+    "id": "in_status",
+    "type": "mqtt in",
+    "z": "smartac_tab",
+    "name": "Status (LWT)",
+    "topic": "enp_iot/lotfi/ac/status",
+    "qos": "1",
+    "datatype": "utf8",
+    "broker": "mqtt_broker_hivemq",
+    "nl": false,
+    "rap": true,
+    "rh": 0,
+    "inputs": 0,
+    "x": 110,
+    "y": 120,
+    "wires": [
+      [
+        "fn_status"
+      ]
+    ]
+  },
+  {
+    "type": "function",
+    "z": "smartac_tab",
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "id": "fn_status",
+    "name": "Status",
+    "func": "// ESP32 status: retained \"online\" / Last Will \"offline\"\n// Output 1 -> overview state, output 2 -> activity log\nconst online = String(msg.payload).trim().toLowerCase() === 'online';\nreturn [\n    { topic: 'status', payload: online },\n    { topic: 'event', payload: online ? 'Device online' : 'Device offline (Last Will)', level: online ? 'ok' : 'alert' }\n];",
+    "outputs": 2,
+    "x": 320,
+    "y": 120,
+    "wires": [
+      [
+        "fn_overview"
+      ],
+      [
+        "fn_log"
+      ]
+    ]
+  },
+  {
+    "type": "function",
+    "z": "smartac_tab",
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "id": "fn_overview",
+    "name": "Overview state",
+    "func": "// Merge status + telemetry into a single state object for the header template\nconst s = context.get('s') || { online: false, data: null, last: null };\nif (msg.topic === 'status') {\n    s.online = msg.payload === true;\n} else if (msg.topic === 'telemetry') {\n    s.data = msg.payload;\n    s.last = Date.now();\n    s.online = true;\n}\ncontext.set('s', s);\nreturn { payload: s };",
+    "outputs": 1,
+    "x": 570,
+    "y": 100,
+    "wires": [
+      [
+        "tpl_overview"
+      ]
+    ]
+  },
+  {
+    "type": "ui_template",
+    "z": "smartac_tab",
+    "storeOutMessages": true,
+    "fwdInMessages": false,
+    "resendOnRefresh": true,
+    "templateScope": "local",
+    "className": "",
+    "wires": [
+      []
+    ],
+    "id": "tpl_overview",
+    "name": "Header + KPI tiles",
+    "group": "ui_grp_overview",
+    "order": 1,
+    "width": 18,
+    "height": 4,
+    "format": "<div class=\"sac-wrap\">\n  <div class=\"sac-head\">\n    <div class=\"sac-brand\">\n      <div class=\"sac-logo\"><i class=\"fa fa-snowflake-o\"></i></div>\n      <div>\n        <div class=\"sac-h1\">Smart Air Conditioner</div>\n        <div class=\"sac-sub\">ESP32 · DHT22 · MQTT · Node-RED &nbsp;|&nbsp; Djebbar Lotfi</div>\n      </div>\n    </div>\n    <div class=\"sac-meta\">\n      <span class=\"sac-updated\">Last update <b>{{ s.last ? (s.last | date:'HH:mm:ss') : '--:--:--' }}</b></span>\n      <span class=\"sac-pill\" ng-class=\"s.online ? 'ok' : 'bad'\"><span class=\"dot\"></span>{{ s.online ? 'Device online' : 'Device offline' }}</span>\n    </div>\n  </div>\n\n  <div class=\"sac-tiles\">\n    <div class=\"sac-tile\" ng-class=\"{ on: d.ac === 'ON' }\">\n      <div class=\"sac-tile-top\"><span>Compressor</span>\n        <svg class=\"sac-fan\" viewBox=\"0 0 24 24\"><path fill=\"currentColor\" d=\"M12,11A1,1 0 0,0 11,12A1,1 0 0,0 12,13A1,1 0 0,0 13,12A1,1 0 0,0 12,11M12.5,2C17,2 17.11,5.57 14.75,6.75C13.76,7.24 13.32,8.29 13.13,9.22C13.61,9.42 14.03,9.73 14.35,10.13C18.05,8.13 22.03,8.92 22.03,12.5C22.03,17 18.46,17.1 17.28,14.73C16.78,13.74 15.72,13.3 14.79,13.11C14.59,13.59 14.28,14 13.88,14.34C15.87,18.03 15.08,22 11.5,22C7,22 6.91,18.42 9.27,17.24C10.25,16.75 10.69,15.71 10.89,14.79C10.4,14.59 9.97,14.27 9.65,13.87C5.96,15.85 2,15.07 2,11.5C2,7 5.56,6.89 6.74,9.26C7.24,10.25 8.29,10.68 9.22,10.87C9.41,10.39 9.73,9.97 10.14,9.65C8.15,5.96 8.94,2 12.5,2Z\"/></svg></div>\n      <div class=\"sac-val\">{{ d.ac || '--' }}</div>\n      <div class=\"sac-cap\">{{ d.ac === 'ON' ? 'Cooling the room' : (d.ac ? 'Idle' : 'Waiting for data') }}</div>\n    </div>\n    <div class=\"sac-tile\">\n      <div class=\"sac-tile-top\"><span>Operating mode</span><i class=\"fa fa-cogs\"></i></div>\n      <div class=\"sac-val\">{{ d.mode || '--' }}</div>\n      <div class=\"sac-cap\">{{ d.mode === 'AUTO' ? 'Thermostat, hysteresis ±0.5 °C' : (d.mode === 'MANUAL' ? 'Controlled from the dashboard' : '') }}</div>\n    </div>\n    <div class=\"sac-tile\">\n      <div class=\"sac-tile-top\"><span>Setpoint</span><i class=\"fa fa-bullseye\"></i></div>\n      <div class=\"sac-val\">{{ hasSp ? (d.setpoint | number:1) : '--' }}<small>°C</small></div>\n      <div class=\"sac-cap\">{{ hasSp ? ('Band ' + (d.setpoint - 0.5 | number:1) + ' – ' + (d.setpoint + 0.5 | number:1) + ' °C') : '' }}</div>\n    </div>\n    <div class=\"sac-tile\">\n      <div class=\"sac-tile-top\"><span>Room</span><i class=\"fa fa-thermometer-half\"></i></div>\n      <div class=\"sac-val\">{{ hasT ? (d.temperature | number:1) : '--' }}<small>°C</small>\n        <small>&nbsp;·&nbsp;{{ d.humidity != null ? (d.humidity | number:0) : '--' }}% RH</small></div>\n      <div class=\"sac-cap\">{{ deltaText }}</div>\n    </div>\n  </div>\n</div>\n<script>\n(function (scope) {\n  scope.s = { online: false, data: null, last: null };\n  scope.d = {};\n  scope.$watch('msg', function (msg) {\n    if (!msg || !msg.payload) return;\n    scope.s = msg.payload;\n    var d = scope.s.data || {};\n    scope.d = d;\n    scope.hasT = typeof d.temperature === 'number';\n    scope.hasSp = typeof d.setpoint === 'number';\n    if (scope.hasT && scope.hasSp) {\n      var delta = d.temperature - d.setpoint;\n      scope.deltaText = Math.abs(delta) <= 0.5 ? 'Within comfort band'\n        : (delta > 0 ? '+' : '') + delta.toFixed(1) + ' °C vs setpoint';\n    } else {\n      scope.deltaText = '';\n    }\n  });\n})(scope);\n</script>",
+    "x": 800,
+    "y": 100
+  },
+  {
+    "id": "gauge_temp",
+    "type": "ui_gauge",
+    "z": "smartac_tab",
+    "name": "Temperature",
+    "group": "ui_grp_live",
+    "order": 1,
+    "width": 3,
+    "height": 5,
+    "gtype": "gage",
+    "title": "Temperature",
+    "label": "°C",
+    "format": "{{value | number:1}}",
+    "min": 0,
+    "max": "50",
+    "colors": [
+      "#38bdf8",
+      "#22c55e",
+      "#ef4444"
+    ],
+    "seg1": "22",
+    "seg2": "30",
+    "diff": false,
+    "className": "",
+    "x": 590,
+    "y": 160,
+    "wires": []
+  },
+  {
+    "id": "gauge_hum",
+    "type": "ui_gauge",
+    "z": "smartac_tab",
+    "name": "Humidity",
+    "group": "ui_grp_live",
+    "order": 2,
+    "width": 3,
+    "height": 5,
+    "gtype": "wave",
+    "title": "Humidity",
+    "label": "%",
+    "format": "{{value | number:0}}",
+    "min": 0,
+    "max": "100",
+    "colors": [
+      "#22d3ee",
+      "#0891b2",
+      "#0e7490"
+    ],
+    "seg1": "",
+    "seg2": "",
+    "diff": false,
+    "className": "",
+    "x": 580,
+    "y": 200,
+    "wires": []
+  },
+  {
+    "id": "sw_mode",
+    "type": "ui_switch",
+    "z": "smartac_tab",
+    "name": "Automatic mode",
+    "label": "Automatic mode",
+    "tooltip": "ON = AUTO (thermostat), OFF = MANUAL",
+    "group": "ui_grp_ctrl",
+    "order": 1,
+    "width": 6,
+    "height": 1,
+    "passthru": false,
+    "decouple": "false",
+    "topic": "cmd_mode",
+    "topicType": "str",
+    "style": "",
+    "onvalue": "AUTO",
+    "onvalueType": "str",
+    "onicon": "",
+    "oncolor": "",
+    "offvalue": "MANUAL",
+    "offvalueType": "str",
+    "officon": "",
+    "offcolor": "",
+    "animate": true,
+    "className": "",
+    "x": 600,
+    "y": 260,
+    "wires": [
+      [
+        "out_mode",
+        "fn_log"
+      ]
+    ]
+  },
+  {
+    "id": "sw_power",
+    "type": "ui_switch",
+    "z": "smartac_tab",
+    "name": "AC power (manual)",
+    "label": "AC power (manual)",
+    "tooltip": "Switching power forces MANUAL mode",
+    "group": "ui_grp_ctrl",
+    "order": 2,
+    "width": 6,
+    "height": 1,
+    "passthru": false,
+    "decouple": "false",
+    "topic": "cmd_power",
+    "topicType": "str",
+    "style": "",
+    "onvalue": "ON",
+    "onvalueType": "str",
+    "onicon": "",
+    "oncolor": "",
+    "offvalue": "OFF",
+    "offvalueType": "str",
+    "officon": "",
+    "offcolor": "",
+    "animate": true,
+    "className": "",
+    "x": 610,
+    "y": 300,
+    "wires": [
+      [
+        "out_power",
+        "fn_log"
+      ]
+    ]
+  },
+  {
+    "id": "slider_sp",
+    "type": "ui_slider",
+    "z": "smartac_tab",
+    "name": "Setpoint",
+    "label": "Setpoint (°C)",
+    "tooltip": "16 to 30 °C, sent on release",
+    "group": "ui_grp_ctrl",
+    "order": 3,
+    "width": 6,
+    "height": 1,
+    "passthru": false,
+    "outs": "end",
+    "topic": "cmd_setpoint",
+    "topicType": "str",
+    "min": "16",
+    "max": "30",
+    "step": "0.5",
+    "className": "",
+    "x": 590,
+    "y": 340,
+    "wires": [
+      [
+        "out_setpoint",
+        "fn_log"
+      ]
+    ]
+  },
+  {
+    "type": "ui_template",
+    "z": "smartac_tab",
+    "storeOutMessages": false,
+    "fwdInMessages": false,
+    "resendOnRefresh": false,
+    "templateScope": "local",
+    "className": "",
+    "wires": [
+      []
+    ],
+    "id": "tpl_hint",
+    "name": "Control hint",
+    "group": "ui_grp_ctrl",
+    "order": 4,
+    "width": 6,
+    "height": 2,
+    "format": "<div class=\"sac-hint\">\n  <b>AUTO</b>: the ESP32 regulates around the setpoint.\n  Using <b>AC power</b> switches the device to <b>MANUAL</b>.\n</div>",
+    "x": 590,
+    "y": 380
+  },
+  {
+    "id": "out_mode",
+    "type": "mqtt out",
+    "z": "smartac_tab",
+    "name": "cmd/mode",
+    "topic": "enp_iot/lotfi/ac/cmd/mode",
+    "qos": "1",
+    "retain": "false",
+    "respTopic": "",
+    "contentType": "",
+    "userProps": "",
+    "correl": "",
+    "expiry": "",
+    "broker": "mqtt_broker_hivemq",
+    "x": 850,
+    "y": 260,
+    "wires": []
+  },
+  {
+    "id": "out_power",
+    "type": "mqtt out",
+    "z": "smartac_tab",
+    "name": "cmd/power",
+    "topic": "enp_iot/lotfi/ac/cmd/power",
+    "qos": "1",
+    "retain": "false",
+    "respTopic": "",
+    "contentType": "",
+    "userProps": "",
+    "correl": "",
+    "expiry": "",
+    "broker": "mqtt_broker_hivemq",
+    "x": 850,
+    "y": 300,
+    "wires": []
+  },
+  {
+    "id": "out_setpoint",
+    "type": "mqtt out",
+    "z": "smartac_tab",
+    "name": "cmd/setpoint",
+    "topic": "enp_iot/lotfi/ac/cmd/setpoint",
+    "qos": "1",
+    "retain": "false",
+    "respTopic": "",
+    "contentType": "",
+    "userProps": "",
+    "correl": "",
+    "expiry": "",
+    "broker": "mqtt_broker_hivemq",
+    "x": 860,
+    "y": 340,
+    "wires": []
+  },
+  {
+    "type": "function",
+    "z": "smartac_tab",
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "id": "fn_log",
+    "name": "Activity log",
+    "func": "// Keep the last 12 events (commands, state changes, alerts) for the activity log\nlet log = context.get('log') || [];\nlet text, level;\nswitch (msg.topic) {\n    case 'cmd_mode':     text = 'Command sent: mode ' + msg.payload; level = 'cmd'; break;\n    case 'cmd_power':    text = 'Command sent: power ' + msg.payload; level = 'cmd'; break;\n    case 'cmd_setpoint': text = 'Command sent: setpoint ' + Number(msg.payload).toFixed(1) + ' °C'; level = 'cmd'; break;\n    case 'event':        text = msg.payload; level = msg.level || 'info'; break;\n    default: return null;\n}\nlog.unshift({ t: Date.now(), text: text, level: level });\nlog = log.slice(0, 12);\ncontext.set('log', log);\nreturn { payload: log };",
+    "outputs": 1,
+    "x": 850,
+    "y": 440,
+    "wires": [
+      [
+        "tpl_log"
+      ]
+    ]
+  },
+  {
+    "type": "ui_template",
+    "z": "smartac_tab",
+    "storeOutMessages": true,
+    "fwdInMessages": false,
+    "resendOnRefresh": true,
+    "templateScope": "local",
+    "className": "",
+    "wires": [
+      []
+    ],
+    "id": "tpl_log",
+    "name": "Activity list",
+    "group": "ui_grp_log",
+    "order": 1,
+    "width": 6,
+    "height": 5,
+    "format": "<div class=\"sac-log\">\n  <div class=\"sac-log-empty\" ng-if=\"!msg.payload.length\">No events yet</div>\n  <div class=\"sac-log-row\" ng-repeat=\"e in msg.payload track by $index\" ng-class=\"e.level\">\n    <span class=\"sac-log-dot\"></span>\n    <span class=\"sac-log-text\" title=\"{{ e.text }}\">{{ e.text }}</span>\n    <span class=\"sac-log-time\">{{ e.t | date:'HH:mm:ss' }}</span>\n  </div>\n</div>",
+    "x": 1050,
+    "y": 440
+  },
+  {
+    "id": "chart_hist",
+    "type": "ui_chart",
+    "z": "smartac_tab",
+    "name": "History",
+    "group": "ui_grp_hist",
+    "order": 1,
+    "width": 18,
+    "height": 6,
+    "label": " ",
+    "chartType": "line",
+    "legend": "true",
+    "xformat": "HH:mm:ss",
+    "interpolate": "monotone",
+    "nodata": "Waiting for data...",
+    "dot": false,
+    "ymin": "0",
+    "ymax": "100",
+    "removeOlder": "10",
+    "removeOlderPoints": "",
+    "removeOlderUnit": "60",
+    "cutout": 0,
+    "useOneColor": false,
+    "useUTC": false,
+    "colors": [
+      "#f97316",
+      "#22d3ee",
+      "#22c55e",
+      "#d62728",
+      "#9467bd",
+      "#8c564b",
+      "#e377c2",
+      "#7f7f7f",
+      "#bcbd22"
+    ],
+    "outputs": 1,
+    "useDifferentColor": false,
+    "className": "",
+    "x": 590,
+    "y": 500,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "toast_alert",
+    "type": "ui_toast",
+    "z": "smartac_tab",
+    "position": "top right",
+    "displayTime": "6",
+    "highlight": "#ef4444",
+    "sendall": true,
+    "outputs": 0,
+    "ok": "OK",
+    "cancel": "",
+    "raw": false,
+    "className": "",
+    "topic": "",
+    "name": "High temperature alert",
+    "x": 620,
+    "y": 560,
+    "wires": []
+  }
+]
